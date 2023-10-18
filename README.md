@@ -37,3 +37,90 @@ In this project, we introduce a comprehensive assessment framework called **MM-B
 | Lynx |  Multimodal| [Lynx](https://github.com/bytedance/lynx-llm) | [Paper](https://arxiv.org/abs/2307.02469) | Vicuna-7B |Eva-ViT-1b | 8.41B | 0.69B |
 |BLIP-2 |Multimodal|[BLIP-2](https://github.com/salesforce/LAVIS/tree/main/projects/blip2) | [Paper](https://arxiv.org/abs/2301.12597) | FlanT5-XXL | ViT-g/14 | 12.23B | 0.11B |
 |InstructBLIP | Multimodal|[InstructBLIP](https://github.com/salesforce/LAVIS/tree/main/projects/instructblip#instructblip-towards-general-purpose-vision-language-models-with-instruction-tuning) | [Paper](https://arxiv.org/abs/2305.06500) | FlanT5-XXL | ViT-g/14 | 12.31B | 0.45B |
+
+
+## Setup
+
+Install dependencies and download data.
+
+```
+conda create -n mm-bigbench python=3.8 -y
+conda activate mm-bigbench
+pip install -r requirements.txt
+```
+
+## Fast Start
+
+### Select evaluated dataset, model, prompt_type
+
+1. Select the evaluated task and dataset in the "*.sh" file;
+2. Select the model to be evaluated in the "*.sh" file;
+3. Select the prompt type, from "1" to "10" in the "*.sh" file;
+4. Run the corresponding "*.sh" file.
+
+
+### Running the inference of difffernt models
+
+For Text-FlanT5-XXL, BLIP-2, InstructBLIP, Fromage, OpenFlamingo, Multimodal-GPT models:
+```
+sh test_scripts/run_scripts.sh
+
+## Change the "model_name" in the ".sh" file to corresponding to the 'text_flan-t5-xxl' 'blip2_t5' 'blip2_instruct_flant5xxl' 'fromage' 'openflamingo' 'mmgpt'.
+
+
+```
+
+For LaVIN model: 
+```
+sh test_scripts/run_LaVIN_zero_shot.sh
+```
+
+For Lynx model:
+```
+sh test_scripts/run_lynx_llm_zero_shot.sh
+```
+
+For other models:
+
+```
+Other models will be updated soon.
+```
+
+### Eval the results to get the accuracy metric
+
+```
+sh test_scripts/eval_scripts.sh
+```
+
+## Diverse Metrics Based on All Results
+
+### Best Performance Metric
+```
+python evaluation/calculate_best_acc.py
+```
+
+### Mean Relative Gain Metric
+```
+python evaluation/calculate_mean_relative_gain.py
+```
+
+### Stabability Metric
+```
+python evaluation/calculate_stabability.py
+```
+
+### Adaptability Metric
+```
+python evaluation/calculate_topk_hit_ratio.py
+```
+
+## Citation
+
+```bibtex
+@inproceedings{Yang2023MMBigBenchEM,
+  title={MM-BigBench: Evaluating Multimodal Models on Multimodal Content Comprehension Tasks},
+  author={Xiaocui Yang and Wenfang Wu and Shi Feng and Ming Wang and Daling Wang and Yang Li and Qi Sun and Yifei Zhang and Xiaoming Fu and Soujanya Poria},
+  year={2023},
+  url={https://api.semanticscholar.org/CorpusID:264127863}
+}
+```
