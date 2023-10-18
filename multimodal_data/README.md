@@ -20,3 +20,37 @@ We conduct comprehensive evaluation of various Language Models across a diverse 
 |MSR | Sarcasm | [Data](https://github.com/headacheboy/data-of-multimodal-sarcasm-detection) | [Paper](https://aclanthology.org/P19-1239/)|Text-Image | 2409 | 2 |
 |MRE | MNRE | [Data](https://github.com/thecharm/Mega) | [Paper](https://dl.acm.org/doi/10.1145/3474085.3476968) |Text-Image | 640 | 19 |
 |VQA | ScienceQA | [Data](https://scienceqa.github.io/#dataset) | [Paper](https://proceedings.neurips.cc//paper_files/paper/2022/hash/11332b6b6cf4485b84afadb1352d3a9a-Abstract-Conference.html) |Text-Image | 2017 | - |
+
+
+## Data Files Structure
+```
+├─multimodal_data
+│ ├─task_file
+│     └─dataset_file
+│           |-test.csv
+│           |-test.json
+│           └─image_data 
+│               └─test_image
+│                   |-1.jpg
+│                   |-2.jpg
+│                   ...
+                   
+For Example,
+├─multimodal_data
+│ ├─MSA
+│    |-TumEmo
+│    |-MVSA-Multiple
+│    └─MVSA-Single
+│           |-test.csv
+│           |-test.json
+│           └─image_data 
+│               └─test_image
+│                   |-1.jpg
+│                   |-2.jpg
+│                   ...
+│ ├─MABSA
+│ ├─QA
+
+...
+
+```
