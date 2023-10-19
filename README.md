@@ -63,11 +63,11 @@ pip install -r requirements.txt
 
 ### Running the inference of difffernt models
 
-For Text-FlanT5-XXL, BLIP-2, InstructBLIP, Fromage, OpenFlamingo, Multimodal-GPT models:
+For LLaMA-V1-7B, LLaMA-V1-13B, LLaMA-V2-7B, LLaMA-V2-13B, Text-FlanT5-XXL, BLIP-2, InstructBLIP, Fromage, OpenFlamingo, Multimodal-GPT models:
 ```
 sh test_scripts/run_scripts.sh
 
-## Change the "model_name" in the ".sh" file to corresponding to the 'text_flan-t5-xxl' 'blip2_t5' 'blip2_instruct_flant5xxl' 'fromage' 'openflamingo' 'mmgpt'.
+## Change the "model_name" in the ".sh" file to corresponding to the 'decapoda-llama-7b-hf', 'decapoda-llamab-hf', 'meta-llama2-7b-hf', 'meta-llama2-13b-hf', 'text_flan-t5-xxl', 'blip2_t5', 'blip2_instruct_flant5xxl', 'fromage', 'openflamingo', 'mmgpt'.
 
 
 ```

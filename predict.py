@@ -53,6 +53,9 @@ import datetime
 ## for mmgpt
 from multimodal_eval_main.models.Multimodal_GPT.app import Inferencer as mmgpt_Inferencer
 
+## for llama
+from multimodal_eval_main.models.llama_recipes.inference.model_utils import load_model as load_model_for_llama, load_peft_model as load_peft_model_for_llama
+from transformers.models.llama.tokenization_llama import LlamaTokenizer
 
 os.environ['TOKENIZERS_PARALLELISM'] = 'false'
 def get_parameter_number(model):
@@ -97,11 +100,17 @@ def parse_args():
     parser.add_argument("--bits", type=str, default="16bits", help="")
     ##for lynx_llm
     parser.add_argument("--llama_path", type=str, default="/data/xiaocui/weights/decapoda-research/llama-7b-hf", help="the path of llama-7b")
+    ## ''decapoda-llama-7b-hf' --llama_path "/data/xiaocui/weights/decapoda-research/llama-7b-hf"
+    ## ''decapoda-llama-13b-hf' --llama_path "/data/xiaocui/weights/decapoda-research/llama-13b-hf"
     parser.add_argument("--open_flamingo_path", type=str, default="/data/xiaocui/weights/openflamingo/OpenFlamingo-9B/checkpoint.pt", help="the path of openflamingo")
     parser.add_argument("--finetune_path", type=str, default="/data/xiaocui/weights/Multimodal_GPT/mmgpt-lora-v0-release.pt", help="the path of mmgpt_lora")
-
     
-    
+    ## for llama
+    parser.add_argument('--use_quantization', action='store_true', help='use quantization or not in llama')
+    parser.add_argument('--peft_model', type=str, default=None, help='the path of peft_model in llama')
+    parser.add_argument("--top_k", type=int, default=1, help="")
+    parser.add_argument("--repetition_penalty", type=float, default=1.0, help="")
+    parser.add_argument("--length_penalty", type=int, default=1, help="")
     
     
     return parser.parse_args()
@@ -312,6 +321,35 @@ def load_model(args, loacal_rank=None, world_size=None):
         model_type = 'google/flan-t5-xxl'
         tokenizer = T5Tokenizer.from_pretrained(model_type)
         model = T5ForConditionalGeneration.from_pretrained(model_type, device_map="auto")
+        args.model_type = model_type
+        return tokenizer, model, model_type
+    
+    ##LLaMA
+    elif 'decapoda-llama'in args.model_name or 'meta-llama2' in args.model_name:
+        if args.model_name == 'decapoda-llama-7b-hf':
+            ## llama_path = 'decapoda-research/llama-7b-hf' or 'your local path'
+            model_type = 'LLaMA-V1-7B'
+        elif args.model_name == 'decapoda-llama-13b-hf':
+            model_type = 'LLaMA-V1-13B'
+            ## llama_path = 'decapoda-research/llama-13b-hf' or 'your local path'
+        elif args.model_name == 'meta-llama2-7b-hf':
+            model_type = 'LLaMA-V2-7B'
+            ## llama_path = 'meta-llama/Llama-2-7b-hf' or 'your local path' 
+        elif args.model_name == 'meta-llama2-13b-hf':
+            model_type = 'LLaMA-V2-13B'
+            ## llama_path = 'meta-llama/Llama-2-13b-hf' or 'your local path' 
+            
+            
+        model = load_model_for_llama(args.llama_path, args.use_quantization)
+        tokenizer = LlamaTokenizer.from_pretrained(args.llama_path)
+        tokenizer.add_special_tokens(
+                                            {
+                                                "pad_token": "[PAD]",
+                                            }
+                                        )
+        if args.peft_model:
+            model = load_peft_model_for_llama(model, args.peft_model)     
+        model.eval() 
         args.model_type = model_type
         return tokenizer, model, model_type
     
@@ -569,12 +607,12 @@ def generate_prompt(setting, task, dataset, label_space, row, demo_tuples, model
         task_name = get_task_name(task, dataset)
 
         if task == "MABSA":
-            if model_name == 'text_flan-t5-xxl':
+            if model_name == 'text_flan-t5-xxl' or 'decapoda-llama'in args.model_name:
                 task_name, task_definition, output_format = generate_text_template("MABSA", label_space, task_name=task_name, target=row["aspect"])
             else:
                 task_name, task_definition, output_format = generate_multimodal_template("MABSA", label_space, task_name=task_name, target=row["aspect"])
         elif task == "MSA":
-            if model_name == 'text_flan-t5-xxl':
+            if model_name == 'text_flan-t5-xxl' or 'decapoda-llama'in args.model_name:
                 task_name, task_definition, output_format = generate_text_template("MSA", label_space, task_name=task_name)
             else:
                 task_name, task_definition, output_format = generate_multimodal_template("MSA", label_space, task_name=task_name)
@@ -585,17 +623,17 @@ def generate_prompt(setting, task, dataset, label_space, row, demo_tuples, model
             tail_cat = row['tail_cat']
             if dataset == "MRE":
                 relation_label_space = label_space
-                if model_name == 'text_flan-t5-xxl':
+                if model_name == 'text_flan-t5-xxl' or 'decapoda-llama'in args.model_name:
                     task_name, task_definition, output_format = generate_text_template("MRE", relation_label_space, task_name=task_name, head_entity=head_entity, head_cat=head_cat, tail_entity=tail_entity, tail_cat=tail_cat)
                 else:
                     task_name, task_definition, output_format = generate_multimodal_template("MRE", relation_label_space, task_name=task_name, head_entity=head_entity, head_cat=head_cat, tail_entity=tail_entity, tail_cat=tail_cat) 
         elif task == "MHMR":
-            if model_name == 'text_flan-t5-xxl':
+            if model_name == 'text_flan-t5-xxl' or 'decapoda-llama'in args.model_name:
                 task_name, task_definition, output_format = generate_text_template("MHMR", label_space, task_name=task_name)
             else:
                 task_name, task_definition, output_format = generate_multimodal_template("MHMR", label_space, task_name=task_name)
         elif task == "MSR":
-            if model_name == 'text_flan-t5-xxl':
+            if model_name == 'text_flan-t5-xxl' or 'decapoda-llama'in args.model_name:
                 task_name, task_definition, output_format = generate_text_template("MSR", label_space, task_name=task_name)
             else:
                 task_name, task_definition, output_format = generate_multimodal_template("MSR", label_space, task_name=task_name)
@@ -606,7 +644,7 @@ def generate_prompt(setting, task, dataset, label_space, row, demo_tuples, model
         text = row['question']
         choices = eval(row['choices'])
         task_name = get_task_name(task, dataset)
-        if model_name == 'text_flan-t5-xxl':
+        if model_name == 'text_flan-t5-xxl'  or 'decapoda-llama'in args.model_name:
             task_name, task_definition, output_format = generate_text_template("QA", label_space='', task_name=task_name)
         else:
             task_name, task_definition, output_format = generate_multimodal_template("QA", label_space='', task_name=task_name)
@@ -1114,9 +1152,10 @@ def process_dataset(task, dataset, file_path, output_folder, model_name, setting
     output_path = os.path.join(output_folder, f"prediction.csv")
     if setting in ["zero-shot", "few-shot"]:
         if model_name is not None:
-            if model_name == 'text_flan-t5-xxl':
+            if model_name == 'text_flan-t5-xxl' or 'decapoda-llama'in args.model_name or 'meta-llama2' in args.model_name:
                 tokenizer,  model, model_type= load_model(args)
                 
+            
             elif model_name == 'blip2_t5' or model_name == 'blip2_instruct_flant5xxl' or model_name == 'fromage' or model_name == 'openflamingo'  or model_name == 'mmgpt':
                 model, model_type = load_model(args)
             elif model_name == 'LaVIN_7B' or model_name == 'LaVIN_13B':
@@ -1297,6 +1336,29 @@ def process_dataset(task, dataset, file_path, output_folder, model_name, setting
                         outputs = model.generate(input_ids)
                         pred = tokenizer.decode(outputs[0])
                         pred = pred.split("<pad>")[-1].strip().split('</s>')[0]
+                        
+                    elif 'decapoda-llama'in model_name or 'meta-llama2' in model_name:
+                        batch = tokenizer(prompt, return_tensors="pt")
+                        batch = {k: v.to(device) for k, v in batch.items()}
+                        
+                        with torch.no_grad():
+                            # print(f'++++++++++++++++++the args.max_output_new_length is {args.max_output_new_length}++++++++++++')
+                            outputs = model.generate(
+                                                    **batch,
+                                                    max_new_tokens=args.max_output_new_length,
+                                                    do_sample=False,
+                                                    top_p=args.top_p,
+                                                    temperature=args.temperature,
+                                                    min_length=1,
+                                                    use_cache=False,
+                                                    top_k=args.top_k,
+                                                    repetition_penalty=args.repetition_penalty,
+                                                    length_penalty=args.length_penalty,
+                                                    )
+
+                            pred = tokenizer.decode(outputs[0], skip_special_tokens=True)
+                        
+                        
                     elif model_name == 'blip2_t5' or model_name == 'blip2_instruct_flant5xxl' or model_name == 'fromage' or model_name == 'openflamingo':
                         inputs = MultimodalSequence(
                         parts=[
@@ -1340,7 +1402,7 @@ def process_dataset(task, dataset, file_path, output_folder, model_name, setting
                         
                     predictions_original.append(pred)
                     
-                    if model_name == 'LaVIN_7B' or model_name == 'LaVIN_13B' or model_name == 'mmgpt':
+                    if model_name == 'LaVIN_7B' or model_name == 'LaVIN_13B' or model_name == 'mmgpt' or 'decapoda-llama'in model_name or 'meta-llama2' in model_name:
                         if args.prompt_type=='1':
                             str1= 'Label:'
                             index = pred.find(str1)

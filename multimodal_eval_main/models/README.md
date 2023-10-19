@@ -3,6 +3,24 @@
 1. Download weights for each model;
 2. Change to your path in the corresponding to the code.
 
+Note: the download weights from huggingface can refer to [download_weights_for_huggingface](utils/download_meta_llama2.py).
+
+
+### LLaMA-1
+
+Download weights:  
+
+LLaMA-1-7B: [decapoda-research/llama-7b-hf](https://huggingface.co/decapoda-research/llama-7b-hf),
+LLaMA-1-13B: [decapoda-research/llama-13b-hf](https://huggingface.co/decapoda-research/llama-13b-hf)
+
+### LLaMA-2
+
+Download weights:  
+
+LLaMA-2-7B: [meta-llama/Llama-2-7b-hf](https://huggingface.co/meta-llama/Llama-2-7b-hf),
+LLaMA-2-13B: [meta-llama/Llama-2-13b-hf](https://huggingface.co/meta-llama/Llama-2-13b-hf)
+
+
 
 ### OpenFlamingo
 

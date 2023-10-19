@@ -1,10 +1,12 @@
 for dataset in '["MOSI_2"]'  #'["MASAD"]'
 do
-    for model_name in 'text_flan-t5-xxl' ## 'text_flan-t5-xxl' 'blip2_t5' 'blip2_instruct_flant5xxl' 'fromage' 'openflamingo' 'mmgpt'
+    for model_name in 'meta-llama2-7b-hf' 
+    ## 'decapoda-llama-7b-hf' 'decapoda-llamab-hf' 'meta-llama2-7b-hf' 'meta-llama2-13b-hf' 'text_flan-t5-xxl' 
+    ## 'blip2_t5' 'blip2_instruct_flant5xxl' 'fromage' 'openflamingo' 'mmgpt' 
     do 
         for prompt_type in  "1"
         do 
-            CUDA_VISIBLE_DEVICES=0 python predict.py \
+            CUDA_VISIBLE_DEVICES=1 python predict.py \
             --selected_tasks '["MSA"]' \
             --selected_datasets $dataset \
             --setting zero-shot \
@@ -13,6 +15,7 @@ do
             --max_output_new_length 10 \
             --test_path test_0_10.csv \
             --root_path multimodal_data \
+            --llama_path /data/xiaocui/weights/meta-llama/Llama-2-7b-hf \
             # --open_flamingo_path /data/xiaocui/weights/openflamingo/OpenFlamingo-9B/checkpoint.pt \
             # --llama_path /data/xiaocui/weights/decapoda-research/llama-7b-hf \
             # --finetune_path  /data/xiaocui/weights/Multimodal_GPT/mmgpt-lora-v0-release.pt
