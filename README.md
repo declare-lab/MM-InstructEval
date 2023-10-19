@@ -1,7 +1,7 @@
 # MM-BigBench: Evaluating Multimodal Models on Multimodal Content Comprehension Tasks
 [Paper](https://arxiv.org/abs/2310.09036) | [Data](https://github.com/declare-lab/MM-BigBench/tree/main/multimodal_data)
 <p align="center">
-  <img src="https://github.com/declare-lab/MM-BigBench/blob/main/mm-bigbench.png" alt="" width="200" height="300">
+  <img src="Figure/mm-bigbench.png" alt="" width="200" height="300">
 </p>
 
 # Why?
@@ -92,27 +92,10 @@ Other models will be updated soon.
 sh test_scripts/eval_scripts.sh
 ```
 
-## Diverse Metrics Based on All Results
+## Diverse Metrics
 
-### Best Performance Metric
-```
-python evaluation/calculate_best_acc.py
-```
+Metrics used in our paper can be found in [Evaluation Metrics](evaluation).
 
-### Mean Relative Gain Metric
-```
-python evaluation/calculate_mean_relative_gain.py
-```
-
-### Stabability Metric
-```
-python evaluation/calculate_stabability.py
-```
-
-### Adaptability Metric
-```
-python evaluation/calculate_topk_hit_ratio.py
-```
 
 ## Citation
 

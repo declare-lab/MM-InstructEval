@@ -22,6 +22,11 @@ We conduct comprehensive evaluation of various Language Models across a diverse 
 |VQA | ScienceQA | [Data](https://scienceqa.github.io/#dataset) | [Paper](https://proceedings.neurips.cc//paper_files/paper/2022/hash/11332b6b6cf4485b84afadb1352d3a9a-Abstract-Conference.html) |Text-Image | 2017 | - |
 
 
+## Download Multimodal Datasets
+
+You can download the processed multimodal datasets by the [Google Drive](https://drive.google.com/drive/folders/1VbnmfzSV_igvf-R70oJx_ppE4O0KfK1p?usp=sharing).
+
+
 ## Data Files Structure
 ```
 ├─multimodal_data
