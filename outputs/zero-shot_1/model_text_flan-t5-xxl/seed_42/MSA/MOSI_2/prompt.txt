@@ -1,0 +1,8 @@
+----------------------------------------------------------------------------------------------------
+MSA-MOSI_2:
+Please perform Multimodal Sentiment Classification task.
+Given the text, assign a sentiment label from ['negative', 'positive'].
+Return label only without any other text.
+Sentence: because they arent playing to you theyre playing to a new audience of kids who dont know anything about these characters in the first place
+Label:
+

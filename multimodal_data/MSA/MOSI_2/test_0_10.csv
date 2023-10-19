@@ -1,0 +1,10 @@
+original_index,text,image,label_score,label_text
+nzpVDcQ0ywM_2,the plot has the consistency of swiss cheese,/data/xiaocui/code/MMBigBench/multimodal_data/MSA/MOSI_2/image_data/test_image/nzpVDcQ0ywM_2/frame_000001.jpg,-1.6,negative
+nzpVDcQ0ywM_3,and its really glossed over with lots of stunning special effects and big explosions,/data/xiaocui/code/MMBigBench/multimodal_data/MSA/MOSI_2/image_data/test_image/nzpVDcQ0ywM_3/frame_000006.jpg,0.8,positive
+nzpVDcQ0ywM_4,sigh all in all its kind of a disappointment to any of us who grew up in the 80s and are used to the toys in the cartoon,/data/xiaocui/code/MMBigBench/multimodal_data/MSA/MOSI_2/image_data/test_image/nzpVDcQ0ywM_4/frame_000003.jpg,-1.6,negative
+nzpVDcQ0ywM_5,i feel like it almost should have had a g rating,/data/xiaocui/code/MMBigBench/multimodal_data/MSA/MOSI_2/image_data/test_image/nzpVDcQ0ywM_5/frame_000002.jpg,-0.4,negative
+nzpVDcQ0ywM_6, it was really kind of dumb down for us,/data/xiaocui/code/MMBigBench/multimodal_data/MSA/MOSI_2/image_data/test_image/nzpVDcQ0ywM_6/frame_000002.jpg,-1.4,negative
+nzpVDcQ0ywM_7,and i hate to say that,/data/xiaocui/code/MMBigBench/multimodal_data/MSA/MOSI_2/image_data/test_image/nzpVDcQ0ywM_7/frame_000001.jpg,-1.0,negative
+nzpVDcQ0ywM_8,i think you will really love this movie if you are 8 ,/data/xiaocui/code/MMBigBench/multimodal_data/MSA/MOSI_2/image_data/test_image/nzpVDcQ0ywM_8/frame_000007.jpg,2.0,positive
+nzpVDcQ0ywM_9,but if you are a child who grew up in that time period youre not going to enjoy this movie very much ,/data/xiaocui/code/MMBigBench/multimodal_data/MSA/MOSI_2/image_data/test_image/nzpVDcQ0ywM_9/frame_000001.jpg,-2.2,negative
+nzpVDcQ0ywM_10,because they arent playing to you theyre playing to a new audience of kids who dont know anything about these characters in the first place,/data/xiaocui/code/MMBigBench/multimodal_data/MSA/MOSI_2/image_data/test_image/nzpVDcQ0ywM_10/frame_000006.jpg,-1.0,negative

@@ -1,0 +1,8 @@
+----------------------------------------------------------------------------------------------------
+MSA-MOSI_2:
+Please perform Multimodal Sentiment Classification task.
+ Given the sentence, assign a sentiment label from ['negative' 'positive'].
+ Return label only without any other text.
+ Sequence: {text}
+ Label:
+
