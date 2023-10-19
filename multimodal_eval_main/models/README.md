@@ -3,7 +3,7 @@
 1. Download weights for each model;
 2. Change to your path in the corresponding to the code.
 
-Note: the download weights from huggingface can refer to [download_weights_for_huggingface](utils/download_meta_llama2.py).
+Note: the download weights from huggingface can refer to [utils/download_meta_llama2.py](https://github.com/declare-lab/MM-BigBench/blob/main/utils/download_meta_llama2.py).
 
 
 ### LLaMA-1
