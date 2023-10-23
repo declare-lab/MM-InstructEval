@@ -1,0 +1,7 @@
+----------------------------------------------------------------------------------------------------
+QA-ScienceQA:
+Please perform Multimodal Question Answer task.
+Given the question, please choose the answer from "(a) Maryland (b) New Hampshire (c) Rhode Island (d) Vermont " to the following question. Return answer only without any other text.
+Question: What is the name of the colony shown?
+Label:
+

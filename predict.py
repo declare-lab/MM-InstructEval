@@ -57,6 +57,51 @@ from multimodal_eval_main.models.Multimodal_GPT.app import Inferencer as mmgpt_I
 from multimodal_eval_main.models.llama_recipes.inference.model_utils import load_model as load_model_for_llama, load_peft_model as load_peft_model_for_llama
 from transformers.models.llama.tokenization_llama import LlamaTokenizer
 
+
+## for mplug_owl
+from transformers import AutoTokenizer
+from multimodal_eval_main.models.mPLUG_Owl.mplug_owl.modeling_mplug_owl import MplugOwlForConditionalGeneration
+from multimodal_eval_main.models.mPLUG_Owl.mplug_owl.processing_mplug_owl import MplugOwlImageProcessor, MplugOwlProcessor
+
+##miniGPT4
+from multimodal_eval_main.models.MiniGPT4.minigpt4.common.config import Config as minigpt4_Config
+from multimodal_eval_main.models.MiniGPT4.minigpt4.common.dist_utils import get_rank
+from multimodal_eval_main.models.MiniGPT4.minigpt4.common.registry import registry as miniGPT4_registry
+from multimodal_eval_main.models.MiniGPT4.minigpt4.conversation.conversation import Chat as minigpt4_Chat, CONV_VISION as minigpt4_CONV_VISION
+
+## for llama_adapter
+from multimodal_eval_main.models.LLaMA_Adapter import llama as llama_adapter
+import cv2
+
+## for vpgtrans
+from multimodal_eval_main.models.VPGTrans.lavis.common.config import Config as VPGTans_Config
+from  multimodal_eval_main.models.VPGTrans.lavis.common.dist_utils import get_rank
+from  multimodal_eval_main.models.VPGTrans.lavis.common.registry import registry as vpgtrans_registry
+from multimodal_eval_main.models.VPGTrans.lavis.conversation.conversation import Chat as VPGTans_Chat, CONV_VISION as VPGTans_CONV_VISION
+
+# imports modules for registration
+from multimodal_eval_main.models.VPGTrans.lavis.datasets.builders import *
+from multimodal_eval_main.models.VPGTrans.lavis.models import *
+from multimodal_eval_main.models.VPGTrans.lavis.processors import *
+from multimodal_eval_main.models.VPGTrans.lavis.runners import *
+from multimodal_eval_main.models.VPGTrans.lavis.tasks import *
+
+# llava
+from multimodal_eval_main.models.LLaVA.llava.conversation import conv_templates, SeparatorStyle
+from multimodal_eval_main.models.LLaVA.llava.utils import disable_torch_init
+from transformers import CLIPVisionModel, CLIPImageProcessor, StoppingCriteria
+from multimodal_eval_main.models.LLaVA.llava.model import *
+from multimodal_eval_main.models.LLaVA.llava.model.utils import KeywordsStoppingCriteria
+
+
+DEFAULT_IMAGE_TOKEN = "<image>"
+DEFAULT_IMAGE_PATCH_TOKEN = "<im_patch>"
+DEFAULT_IM_START_TOKEN = "<im_start>"
+DEFAULT_IM_END_TOKEN = "<im_end>"
+
+
+
+
 os.environ['TOKENIZERS_PARALLELISM'] = 'false'
 def get_parameter_number(model):
     total_num = sum(p.numel() for p in model.parameters())
@@ -112,6 +157,26 @@ def parse_args():
     parser.add_argument("--repetition_penalty", type=float, default=1.0, help="")
     parser.add_argument("--length_penalty", type=int, default=1, help="")
     
+    ##for mplug_owl
+    parser.add_argument('--mplug_owl_pretrained_ckpt', type=str, default='/data/xiaocui/weights/mplug/MAGAer13/mplug-owl-llama-7b', help='the path of the pretrained weights for mplug_owl')
+    
+    ##for minigpt4
+    parser.add_argument("--cfg_path", type=str, default="multimodal_eval_main/models/MiniGPT4/eval_configs/minigpt4_eval.yaml", help="path to configuration file.")
+    parser.add_argument( "--options", help="override some settings in the used config, the key-value pair " 
+                                                        "in xxx=yyy format will be merged into config file (deprecate), "
+                                                        "change to --cfg-options instead.",)
+    parser.add_argument("--minigpt4_pretrained_ckpt", type=str, default="/data/xiaocui/weights/MiniGPT4/pretrained_minigpt4.pth", help="path to minigpt4 pretrained weights.")
+    
+    
+    ## for llama_adapter
+    parser.add_argument("--llama_path_for_llama_adapter", type=str, default="/data/xiaocui/weights/LLaMA-7B", help="the path of llama-7b")
+    
+    ## for vpgtrans
+    # parser.add_argument("--cfg_path", type=str, default="multimodal_eval_main/models/VPGTrans/lavis/projects/blip2/demo/vl_vicuna_demo.yaml", help="path to configuration file.")
+    
+    ## for llava
+    parser.add_argument("--llava_model_path", type=str, default="/data/xiaocui/weights/llava-7b", help="/path/to/model")
+    parser.add_argument("--conv_mode", type=str, default='multimodal')
     
     return parser.parse_args()
 args = parse_args()
@@ -324,7 +389,7 @@ def load_model(args, loacal_rank=None, world_size=None):
         args.model_type = model_type
         return tokenizer, model, model_type
     
-    ##LLaMA
+    ##LLaMA-V1
     elif 'decapoda-llama'in args.model_name or 'meta-llama2' in args.model_name:
         if args.model_name == 'decapoda-llama-7b-hf':
             ## llama_path = 'decapoda-research/llama-7b-hf' or 'your local path'
@@ -412,9 +477,77 @@ def load_model(args, loacal_rank=None, world_size=None):
         args.model_type = model_type
         return model, model_type
     
+    ###mPLUG-Owl
+    elif args.model_name == 'mplug_owl':
+        model_type = 'mplug_owl_llama_7b'
+        model = MplugOwlForConditionalGeneration.from_pretrained(
+                                                                    args.mplug_owl_pretrained_ckpt,
+                                                                    torch_dtype=torch.bfloat16,
+                                                                ).to(device)
+        model.tie_weights()
+        image_processor = MplugOwlImageProcessor.from_pretrained(args.mplug_owl_pretrained_ckpt)
+        tokenizer = LlamaTokenizer.from_pretrained(args.mplug_owl_pretrained_ckpt)
+        processor = MplugOwlProcessor(image_processor, tokenizer)
+        args.model_type = model_type
+        return tokenizer, model, processor, model_type
+    
+    ### MiniGPT4
+    elif args.model_name == 'minigpt4':
+        model_type = 'MiniGPT4_Vicuna13B'
+        args.model_type = model_type
+        cfg = minigpt4_Config(args)
+        model_config = cfg.model_cfg
+        model_config.ckpt = args.minigpt4_pretrained_ckpt
+        # model_config.device_8bit = args.gpu_id
+        model_cls = miniGPT4_registry.get_model_class(model_config.arch)
+        model = model_cls.from_config(model_config).to(device)
+
+        vis_processor_cfg = cfg.datasets_cfg.cc_sbu_align.vis_processor.train
+        vis_processor = miniGPT4_registry.get_processor_class(vis_processor_cfg.name).from_config(vis_processor_cfg)
+        return model, vis_processor, model_type
+    
+    ## LLaMA_Adapterv2
+    elif args.model_name == 'llama_adapterv2':  
+        model_type = 'LLaMA_AdapterV2_7B' 
+        args.model_type = model_type
+        model, vis_processor = llama_adapter.load("BIAS-7B", args.llama_path_for_llama_adapter, device)
+        return model, vis_processor, model_type
+
+    ## VPGTrans
+    elif args.model_name == 'vpgtrans':
         
+        model_type = 'VPGTrans_Vicuna7B'
+        args.model_type = model_type
+        cfg = VPGTans_Config(args)
+        model_config = cfg.model_cfg
+        model_cls = vpgtrans_registry.get_model_class(model_config.arch)
+        model = model_cls.from_config(model_config).to(device)
+        
+        vis_processor_cfg = cfg.datasets_cfg.minigpt4_self_instruct_caption.vis_processor.train
+        print(f'=========================the vis_processor_cfg is {vpgtrans_registry.get_processor_class(vis_processor_cfg.name)}')
+        vis_processor = vpgtrans_registry.get_processor_class(vis_processor_cfg.name).from_config(vis_processor_cfg)
+        return model, vis_processor, model_type
     
-    
+    ## LLaVA
+    elif 'llava' in args.model_name:
+        if args.model_name == 'llava_7b':
+            model_type = 'llava_7b'
+        elif args.model_name == 'llava_13b':
+            model_type = 'llava_13b'
+        args.model_type = model_type
+        tokenizer = AutoTokenizer.from_pretrained(args.llava_model_path)
+        if "mpt" in args.llava_model_path.lower():
+            model = LlavaMPTForCausalLM.from_pretrained(args.llava_model_path, low_cpu_mem_usage=True, torch_dtype=torch.float16,
+                                                        use_cache=True).to(device)
+        else:
+            model = LlavaLlamaForCausalLM.from_pretrained(args.llava_model_path, low_cpu_mem_usage=True, torch_dtype=torch.float16,
+                                                        use_cache=True).to(device)
+        image_processor = CLIPImageProcessor.from_pretrained(model.config.mm_vision_tower, torch_dtype=torch.float16)
+
+        mm_use_im_start_end = getattr(model.config, "mm_use_im_start_end", False)
+        tokenizer.add_tokens([DEFAULT_IMAGE_PATCH_TOKEN], special_tokens=True)
+
+        return tokenizer, model, image_processor, model_type, mm_use_im_start_end
 
 # Get label space
 def get_label_space(task: str, dataset: str) -> list:
@@ -1152,6 +1285,7 @@ def process_dataset(task, dataset, file_path, output_folder, model_name, setting
     output_path = os.path.join(output_folder, f"prediction.csv")
     if setting in ["zero-shot", "few-shot"]:
         if model_name is not None:
+            ##############################################load model#######################################################
             if model_name == 'text_flan-t5-xxl' or 'decapoda-llama'in args.model_name or 'meta-llama2' in args.model_name:
                 tokenizer,  model, model_type= load_model(args)
                 
@@ -1192,7 +1326,26 @@ def process_dataset(task, dataset, file_path, output_folder, model_name, setting
                                             batch_size=[config['batch_size_test']],
                                             num_workers=[4],
                                             collate_fns=[test_dataset.collate_fn])[0]
+            elif model_name == 'mplug_owl':
+                tokenizer, model, image_processor, model_type = load_model(args)
             
+            elif model_name == 'minigpt4':
+                model, vis_processor, model_type = load_model(args)
+                chat = minigpt4_Chat(model, vis_processor, device)
+            
+            elif model_name == 'llama_adapterv2':
+                model, vis_processor, model_type = load_model(args)
+            elif model_name == 'vpgtrans':
+                model, vis_processor, model_type = load_model(args)
+                chat = VPGTans_Chat(model, vis_processor, device)
+            elif 'llava' in model_name:
+                tokenizer, model, image_processor, model_type, mm_use_im_start_end = load_model(args)
+                if mm_use_im_start_end:
+                    tokenizer.add_tokens([DEFAULT_IM_START_TOKEN, DEFAULT_IM_END_TOKEN], special_tokens=True)
+                
+            ##############################################load model#######################################################
+                
+            ##############################################generate prediction#######################################################   
             if model_name == 'lynx_llm':
                 result = []
                 with open(output_path, 'w') as fw:
@@ -1395,9 +1548,116 @@ def process_dataset(task, dataset, file_path, output_folder, model_name, setting
                                                     max_gen_len=args.max_gen_len, temperature=args.generation_temperature, top_p=args.top_p,
                                                     n_feats=args.n_prompt)
                         pred=pred[0]
-                        
-                        
                     
+                    elif model_name == 'mplug_owl':
+                        raw_image = [Image.open(image_path)]
+                        inputs = image_processor(text=[prompt], images=raw_image, return_tensors='pt')
+                        inputs = {k: v.bfloat16() if v.dtype == torch.float else v for k, v in inputs.items()}
+                        inputs = {k: v.to(model.device) for k, v in inputs.items()}
+                        generate_kwargs = {
+                            'do_sample': True,
+                            'top_k': 5,
+                            'max_length': args.max_output_new_length
+                        }
+                        with torch.no_grad():
+                            res = model.generate(**inputs, **generate_kwargs)
+                        pred = tokenizer.decode(res.tolist()[0], skip_special_tokens=True)
+                        
+                    elif model_name == 'minigpt4':
+                        
+
+                        chat_state = minigpt4_CONV_VISION.copy()
+                        ##read image
+                        img_list = []
+                        chat.upload_img(image_path, chat_state, img_list)
+                        chat.ask(prompt, chat_state)
+
+                        output_text = chat.answer(conv=chat_state,
+                                                img_list=img_list,
+                                                num_beams=1,
+                                                temperature=0.01,
+                                                max_new_tokens=args.max_output_new_length,
+                                                max_length=2000)[0]
+                        pred = output_text.replace("</s>", "")
+                    
+                    elif model_name == 'llama_adapterv2':
+                        raw_image = cv2.imread(image_path)
+                        raw_image = Image.fromarray(raw_image)
+                        raw_image = vis_processor(raw_image).unsqueeze(0).to(device)
+                        pred = model.generate(raw_image,[prompt])[0]
+                    
+                    elif model_name == 'vpgtrans':
+                        raw_image = Image.open(image_path).convert('RGB')
+                        # image = vis_processors["eval"](raw_image).unsqueeze(0).to(device)
+
+                        chat_state = VPGTans_CONV_VISION.copy()
+                        img_list = []
+                        chat_state.messages = []
+                        llm_message = chat.upload_img(raw_image, chat_state, img_list)
+                        chat.ask(prompt, chat_state)
+                        pred = chat.answer(conv=chat_state, img_list=img_list, max_new_tokens=args.max_output_new_length, max_length=2000)[0].strip()
+                    elif 'llava' in model_name:
+                        raw_image = Image.open(image_path).convert('RGB')
+                        vision_tower = model.get_model().vision_tower[0]
+                        if vision_tower.device.type == 'meta':
+                            vision_tower = CLIPVisionModel.from_pretrained(vision_tower.config._name_or_path, torch_dtype=torch.float16, low_cpu_mem_usage=True).to(device)
+                            model.get_model().vision_tower[0] = vision_tower
+                        else:
+                            vision_tower.to(device)
+                        vision_config = vision_tower.config
+                        vision_config.im_patch_token = tokenizer.convert_tokens_to_ids([DEFAULT_IMAGE_PATCH_TOKEN])[0]
+                        vision_config.use_im_start_end = mm_use_im_start_end
+                        if mm_use_im_start_end:
+                            vision_config.im_start_token, vision_config.im_end_token = tokenizer.convert_tokens_to_ids([DEFAULT_IM_START_TOKEN, DEFAULT_IM_END_TOKEN])
+                        image_token_len = (vision_config.image_size // vision_config.patch_size) ** 2
+                        
+                        if mm_use_im_start_end:
+                            prompt = prompt + '\n' + DEFAULT_IM_START_TOKEN + DEFAULT_IMAGE_PATCH_TOKEN * image_token_len + DEFAULT_IM_END_TOKEN
+                        else:
+                            prompt = prompt + '\n' + DEFAULT_IMAGE_PATCH_TOKEN * image_token_len
+
+                        if "v1" in args.llava_model_path.lower():
+                            conv_mode = "llava_v1"
+                        elif "mpt" in args.llava_model_path.lower():
+                            conv_mode = "mpt_multimodal"
+                        else:
+                            conv_mode = "multimodal"
+
+                        if args.conv_mode is not None and conv_mode != args.conv_mode:
+                            print('[WARNING] the auto inferred conversation mode is {}, while `--conv-mode` is {}, using {}'.format(conv_mode, args.conv_mode, args.conv_mode))
+                        else:
+                            args.conv_mode = conv_mode
+                        
+                        conv = conv_templates[args.conv_mode].copy()
+                        conv.append_message(conv.roles[0], prompt)
+                        conv.append_message(conv.roles[1], None)
+                        prompt = conv.get_prompt()
+                        inputs = tokenizer([prompt])
+                        image_tensor = image_processor.preprocess(raw_image, return_tensors='pt')['pixel_values'][0]
+                        input_ids = torch.as_tensor(inputs.input_ids).to(device)
+
+                        stop_str = conv.sep if conv.sep_style != SeparatorStyle.TWO else conv.sep2
+                        keywords = [stop_str]
+                        stopping_criteria = KeywordsStoppingCriteria(keywords, tokenizer, input_ids)
+                        
+                        with torch.inference_mode():
+                            output_ids = model.generate(
+                                input_ids,
+                                images=image_tensor.unsqueeze(0).half().to(device),
+                                do_sample=True,
+                                temperature=0.2,
+                                max_new_tokens=512,
+                                stopping_criteria=[stopping_criteria])
+                       
+                        input_token_len = input_ids.shape[1]
+                        n_diff_input_output = (input_ids != output_ids[:, :input_token_len]).sum().item()
+                        if n_diff_input_output > 0:
+                            print(f'[Warning] {n_diff_input_output} output_ids are not the same as the input_ids')
+                        pred = tokenizer.batch_decode(output_ids[:, input_token_len:], skip_special_tokens=True)[0].strip()
+               
+                        if pred.endswith(stop_str):
+                            pred = pred[:-len(stop_str)]
+                ##############################################generate prediction#######################################################
                         
                         
                     predictions_original.append(pred)
@@ -1497,35 +1757,38 @@ def process_dataset(task, dataset, file_path, output_folder, model_name, setting
                                     pred_original = "weakly positive"
                         pred = pred_original
                         
-                    
-                    ### process your output
+                    pred = pred.lower()
+                    pred_list = pred.split(' ')
+                    ### process your output, maybe you need to design the specific method to deal with your output of model.
                     if task =='QA':
                         flag_set = set()
                         index_set = set()
                         flag=0
                         choices = eval(row['choices'])
                         for i_, choice in enumerate(choices):
-                            if (pred_original.lower() == choice.lower()):
+                            if pred.lower() in choice.lower():
                                 flag_set.add(choice)
                                 index_set.add(i_)
-                            if pred_original.lower() in choice.lower() and len(flag_set)==0:
-                                flag_set.add(choice)
-                                index_set.add(i_)
-                            if choice.lower() in pred_original.lower() and len(flag_set)==0:
-                                flag_set.add(choice)
-                                index_set.add(i_)
-                            if option_num[i_] in pred_original.lower() and len(flag_set)==0:
-                                flag_set.add(choice)
-                                index_set.add(i_) 
+                        if len(flag_set)==0:
+                            for i_, choice in enumerate(choices):
+                                if choice.lower() in pred.lower():
+                                    flag_set.add(choice)
+                                    index_set.add(i_)
+                        if len(flag_set)==0:
+                            for i_, option_id in enumerate(option_num):
+                                for pred_ in pred_list:
+                                    if option_id in pred_:
+                                        flag_set.add(choice)
+                                        index_set.add(i_) 
                         if len(flag_set)==1: 
-                            pred= flag_set.pop() 
+                            new_pred= flag_set.pop() 
                             prediction_index = index_set.pop()  
                         else:
-                            pred= 'nan'
+                            new_pred= 'nan'
                             prediction_index=-1
                         
                         
-                        predictions.append(pred)
+                        predictions.append(new_pred)
                         prediction_indexes.append(prediction_index)
                     else:
                         flag_set = set()
