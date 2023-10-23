@@ -118,6 +118,6 @@ Download weights:
 [finetune_lynx.pt](https://github.com/bytedance/lynx-llm/tree/main#:~:text=pretrain_lynx.pt%20or-,finetune_lynx.pt,-and%20put%20it).
 
 
-### Flan-T5-XXL, BLIP2, InstructBLIP, Fromage can auto-download.
+### Flan-T5-XXL, BLIP2, InstructBLIP, Fromage can be auto-download.
 
 ### Other models will be updated soon.
