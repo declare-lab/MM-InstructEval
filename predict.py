@@ -94,6 +94,13 @@ from multimodal_eval_main.models.LLaVA.llava.model import *
 from multimodal_eval_main.models.LLaVA.llava.model.utils import KeywordsStoppingCriteria
 
 
+## chatgpt
+from tenacity import (
+    retry,
+    stop_after_attempt,
+    wait_fixed,
+)
+
 DEFAULT_IMAGE_TOKEN = "<image>"
 DEFAULT_IMAGE_PATCH_TOKEN = "<im_patch>"
 DEFAULT_IM_START_TOKEN = "<im_start>"
@@ -178,6 +185,10 @@ def parse_args():
     parser.add_argument("--llava_model_path", type=str, default="/data/xiaocui/weights/llava-7b", help="/path/to/model")
     parser.add_argument("--conv_mode", type=str, default='multimodal')
     
+    ## for chatgpt
+    parser.add_argument("--chatgpt_engine", type=str, default="", help="the engine for chatgpt")
+    parser.add_argument("--api_key", type=str, default="", help="your API Key for chatgpt")
+    
     return parser.parse_args()
 args = parse_args()
 
@@ -185,6 +196,36 @@ device = torch.device("cuda") if torch.cuda.is_available() else "cpu"
 
 ##for LaVIN
 os.environ["LOCAL_RANK"]=args.local_rank
+
+
+def before_retry_fn(retry_state):
+    if retry_state.attempt_number > 1:
+        print(f"Retrying API call. Attempt #{retry_state.attempt_number}, f{retry_state}")
+
+
+@retry(wait=wait_fixed(5), stop=stop_after_attempt(6), before=before_retry_fn)
+def query_chatgpt_model(api_key: str, engine: str, prompt: str, model: str = "gpt-3.5-turbo", max_tokens: int = 256, temperature: float = 0):
+    openai.api_type = "azure"
+    openai.api_base = "https://research2.openai.azure.com/"
+    openai.api_version = "2023-03-15-preview"
+    openai.api_key =api_key
+    try:
+        completions = openai.ChatCompletion.create(
+            engine=engine,
+            model=model,
+            messages=[{"role": "user", "content": prompt}],
+            max_tokens=max_tokens,
+            n=1,
+            stop=None,
+            temperature=temperature,
+        )
+        output = completions.choices[0].message.content.strip()
+    except Exception as e:
+        print(e)
+    return output
+
+def parallel_query_chatgpt_model(api_key, engine, prompt):
+    return query_chatgpt_model(api_key, engine, prompt)
 
 def setup_model_parallel() -> Tuple[int, int]:
     local_rank = int(os.environ.get("LOCAL_RANK", -1))
@@ -548,6 +589,8 @@ def load_model(args, loacal_rank=None, world_size=None):
         tokenizer.add_tokens([DEFAULT_IMAGE_PATCH_TOKEN], special_tokens=True)
 
         return tokenizer, model, image_processor, model_type, mm_use_im_start_end
+    else:
+        print("++++++++++++++++++++++++You can add the other large language models that you want to evaluated!!!! ++++++++++++++++++++++++++++++++++++++++++++")
 
 # Get label space
 def get_label_space(task: str, dataset: str) -> list:
@@ -740,12 +783,12 @@ def generate_prompt(setting, task, dataset, label_space, row, demo_tuples, model
         task_name = get_task_name(task, dataset)
 
         if task == "MABSA":
-            if model_name == 'text_flan-t5-xxl' or 'decapoda-llama'in args.model_name:
+            if model_name == 'text_flan-t5-xxl' or 'decapoda-llama'in args.model_name or model_name == 'chatgpt':
                 task_name, task_definition, output_format = generate_text_template("MABSA", label_space, task_name=task_name, target=row["aspect"])
             else:
                 task_name, task_definition, output_format = generate_multimodal_template("MABSA", label_space, task_name=task_name, target=row["aspect"])
         elif task == "MSA":
-            if model_name == 'text_flan-t5-xxl' or 'decapoda-llama'in args.model_name:
+            if model_name == 'text_flan-t5-xxl' or 'decapoda-llama'in args.model_name or model_name == 'chatgpt':
                 task_name, task_definition, output_format = generate_text_template("MSA", label_space, task_name=task_name)
             else:
                 task_name, task_definition, output_format = generate_multimodal_template("MSA", label_space, task_name=task_name)
@@ -756,17 +799,17 @@ def generate_prompt(setting, task, dataset, label_space, row, demo_tuples, model
             tail_cat = row['tail_cat']
             if dataset == "MRE":
                 relation_label_space = label_space
-                if model_name == 'text_flan-t5-xxl' or 'decapoda-llama'in args.model_name:
+                if model_name == 'text_flan-t5-xxl' or 'decapoda-llama'in args.model_name or model_name == 'chatgpt':
                     task_name, task_definition, output_format = generate_text_template("MRE", relation_label_space, task_name=task_name, head_entity=head_entity, head_cat=head_cat, tail_entity=tail_entity, tail_cat=tail_cat)
                 else:
                     task_name, task_definition, output_format = generate_multimodal_template("MRE", relation_label_space, task_name=task_name, head_entity=head_entity, head_cat=head_cat, tail_entity=tail_entity, tail_cat=tail_cat) 
         elif task == "MHMR":
-            if model_name == 'text_flan-t5-xxl' or 'decapoda-llama'in args.model_name:
+            if model_name == 'text_flan-t5-xxl' or 'decapoda-llama'in args.model_name or model_name == 'chatgpt':
                 task_name, task_definition, output_format = generate_text_template("MHMR", label_space, task_name=task_name)
             else:
                 task_name, task_definition, output_format = generate_multimodal_template("MHMR", label_space, task_name=task_name)
         elif task == "MSR":
-            if model_name == 'text_flan-t5-xxl' or 'decapoda-llama'in args.model_name:
+            if model_name == 'text_flan-t5-xxl' or 'decapoda-llama'in args.model_name or model_name == 'chatgpt':
                 task_name, task_definition, output_format = generate_text_template("MSR", label_space, task_name=task_name)
             else:
                 task_name, task_definition, output_format = generate_multimodal_template("MSR", label_space, task_name=task_name)
@@ -777,7 +820,7 @@ def generate_prompt(setting, task, dataset, label_space, row, demo_tuples, model
         text = row['question']
         choices = eval(row['choices'])
         task_name = get_task_name(task, dataset)
-        if model_name == 'text_flan-t5-xxl'  or 'decapoda-llama'in args.model_name:
+        if model_name == 'text_flan-t5-xxl'  or 'decapoda-llama'in args.model_name or model_name == 'chatgpt':
             task_name, task_definition, output_format = generate_text_template("QA", label_space='', task_name=task_name)
         else:
             task_name, task_definition, output_format = generate_multimodal_template("QA", label_space='', task_name=task_name)
@@ -1286,7 +1329,10 @@ def process_dataset(task, dataset, file_path, output_folder, model_name, setting
     if setting in ["zero-shot", "few-shot"]:
         if model_name is not None:
             ##############################################load model#######################################################
-            if model_name == 'text_flan-t5-xxl' or 'decapoda-llama'in args.model_name or 'meta-llama2' in args.model_name:
+            if model_name == 'chatgpt':
+                if args.api_key is not None:
+                    parallel_call = parallel_query_chatgpt_model
+            elif model_name == 'text_flan-t5-xxl' or 'decapoda-llama'in args.model_name or 'meta-llama2' in args.model_name:
                 tokenizer,  model, model_type= load_model(args)
                 
             
@@ -1474,6 +1520,73 @@ def process_dataset(task, dataset, file_path, output_folder, model_name, setting
                 total_time_str = str(datetime.timedelta(seconds=int(total_time)))
                 print('### Time {}'.format(total_time_str))
                 prompt_sample = config['prompt']
+            
+            elif model_name == 'chatgpt':
+                with open(output_path, 'a') as fww:
+                    tsv_ww = csv.writer(fww, delimiter=',')
+                    # tsv_w.writerow(['original_index', 'text', 'image', 'label_text', 'prediction'])
+                    if task!='QA':
+                        if dataset == "MOSI_7" or dataset == "MOSI_2":
+                            tsv_ww.writerow(['original_index', 'text', 'image', 'label_scores', 'label_text', 'prediction', 'prediction_original'])
+                        elif dataset == "MOSEI_2" or dataset == "MOSEI_7":
+                            tsv_ww.writerow(['original_index', 'text', 'image', 'label_score', 'round_score', 'label_text', 'prediction', 'prediction_original'])
+                        else:
+                            tsv_ww.writerow(['original_index', 'text', 'image', 'label_text', 'prediction', 'prediction_original'])
+                    else:
+                        tsv_ww.writerow(['original_index', 'question', 'image', 'choices',  'hint',  'answer_text', 'answer'])
+                    for index, row in tqdm(df.iterrows()):
+                        print('index is {}'.format(row['original_index']))
+                        prompt = generate_prompt(setting, task, dataset, label_space, row, demo_tuples, model_name, args.prompt_type, args)
+                        # print('prompt is {}'.format((prompt)))
+                        max_len = max(max_len, len(prompt.split()))
+                        # if index == 0:
+                        prompt_sample = prompt
+                        pred_original = parallel_call(args.api_key, args.chatgpt_engine, prompt).lower()
+                        if task !="QA":
+                            
+                            flag_set = set()
+                            flag=0
+                            for label in label_space:
+                                if label in pred_original:
+                                    flag_set.add(label)
+                            if len(flag_set)==1: 
+                                pred= flag_set.pop()    
+                            else:
+                                pred= 'nan'
+                        
+                            predictions.append(pred)
+                        
+                            if dataset == "MOSI_2" or dataset == "MOSI_7":
+                                tsv_ww.writerow([row['original_index'], row['text'], row['image'], row['label_score'], row['label_text'],pred, pred_original])
+                            elif dataset == "MOSEI_2" or dataset == "MOSEI_7":
+                                tsv_ww.writerow([row['original_index'], row['text'], row['image'], row['label_score'], row['round_score'], row['label_text'],pred, pred_original])
+                            else:
+                                tsv_ww.writerow([row['original_index'], row['text'], row['image'], row['label_text'],pred, pred_original])
+                        else:
+                            pred=pred_original
+                            flag_set = set()
+                            index_set = set()
+                            flag=0
+                            choices = eval(row['choices'])
+                            for i_, choice in enumerate(choices):
+                                if (pred.lower() in choice.lower()) or (choice.lower() in (pred.lower()) or option_num[i_] in pred): #
+                                    
+                                    flag_set.add(pred)
+                                    index_set.add(i_)
+                            # print('++++++++++++++++++++++++++the flag_set is {}'.format(flag_set))
+                            if len(flag_set)==1: 
+                                pred= flag_set.pop() 
+                                prediction_index = index_set.pop()  
+                            else:
+                                pred= 'nan'
+                                prediction_index=-1
+                            
+                            
+                            predictions.append(pred)
+                            prediction_indexes.append(prediction_index)
+                        
+                            tsv_ww.writerow([row['original_index'], row['question'], row['image'], row['choices'],  row['hint'],  row['answer_text'], row['answer'], prediction_index, pred, pred_original])
+                
                                 
             else:   
                 for index, row in tqdm(df.iterrows()):
@@ -1875,7 +1988,7 @@ def process_dataset(task, dataset, file_path, output_folder, model_name, setting
     if verbose:
         print(prompt)
     
-    if model_name != 'lynx_llm':
+    if model_name != 'lynx_llm' and model_name !='chatgpt':
         if task == "QA":
             df['predictions_index'] = prediction_indexes
         df["prediction"] = predictions

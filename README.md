@@ -63,11 +63,11 @@ pip install -r requirements.txt
 
 ### Running the inference of difffernt models
 
-For LLaMA-V1-7B, LLaMA-V1-13B, LLaMA-V2-7B, LLaMA-V2-13B, Text-FlanT5-XXL, BLIP-2, InstructBLIP, Fromage, OpenFlamingo, Multimodal-GPT models:
+For ChatGPT, LLaMA-V1-7B, LLaMA-V1-13B, LLaMA-V2-7B, LLaMA-V2-13B, Text-FlanT5-XXL, BLIP-2, InstructBLIP, Fromage, OpenFlamingo, Multimodal-GPT,  mPLUG-Owl, MiniGPT4, LLaMA-Adapterv2, VPGTrans, LLaVA-7B, LLaVA-13 models:
 ```
 sh test_scripts/run_scripts.sh
 
-## Change the "model_name" in the ".sh" file to corresponding to the 'decapoda-llama-7b-hf', 'decapoda-llamab-hf', 'meta-llama2-7b-hf', 'meta-llama2-13b-hf', 'text_flan-t5-xxl', 'blip2_t5', 'blip2_instruct_flant5xxl', 'fromage', 'openflamingo', 'mmgpt'.
+## Change the "model_name" in the ".sh" file to corresponding to the 'chatgpt', 'decapoda-llama-7b-hf', 'decapoda-llamab-hf', 'meta-llama2-7b-hf', 'meta-llama2-13b-hf', 'text_flan-t5-xxl', 'blip2_t5', 'blip2_instruct_flant5xxl', 'fromage', 'openflamingo', 'mmgpt', 'mplug_owl', 'minigpt4', 'llama_adapterv2', 'vpgtrans', 'llava_7b', 'llava_13b'.
 
 
 ```
@@ -82,11 +82,6 @@ For Lynx model:
 sh test_scripts/run_lynx_llm_zero_shot.sh
 ```
 
-For other models:
-
-```
-Other models will be updated soon.
-```
 
 ### Eval the results to get the accuracy metric
 
