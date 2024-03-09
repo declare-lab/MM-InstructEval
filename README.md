@@ -43,7 +43,7 @@ Note: Refer to [Setting Models](multimodal_eval_main/models/README.md) for you.
 
 ### Results
 
-For detailed results, please go to our [leaderboard]([https://declare-lab.net/instruct-eval/](https://declare-lab.github.io/MM-BigBench/))
+For detailed results, please go to our [MM-BigBench leaderboard](https://declare-lab.github.io/MM-BigBench/)
 
 ## Setup
 
