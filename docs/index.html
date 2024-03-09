@@ -172,19 +172,19 @@
         Benchmark:
         <div class="switch-toggle switch-evaluator" style="margin-right: 4em">
 
-            <input id="best_performance" name="evaluator" type="radio" checked="checked" value="https://raw.githubusercontent.com/YangXiaocui1215/MM-BigBench/main/docs/best_performance.csv" onchange="updateTable(this.value)" />
+            <input id="best_performance" name="evaluator" type="radio" checked="checked" value="https://raw.githubusercontent.com/declare-lab/MM-BigBench/main/docs/best_performance.csv" onchange="updateTable(this.value)" />
             <label for="best_performance" onclick="">Best Performace on Full Test Datasets</label>
 
-            <input id="mean_relative_gain_models" name="evaluator" type="radio" value="https://raw.githubusercontent.com/YangXiaocui1215/MM-BigBench/main/docs/Mean_Relative_Gain_Models.csv", onchange="updateTable(this.value)"/>
+            <input id="mean_relative_gain_models" name="evaluator" type="radio" value="https://raw.githubusercontent.com/declare-lab/MM-BigBench/main/docs/Mean_Relative_Gain_Models.csv", onchange="updateTable(this.value)"/>
             <label for="mean_relative_gain_models" onclick="">Mean Relative Gain of Models</label>
 
-            <input id="mean_relative_gain_instructions" name="evaluator" type="radio" value="https://raw.githubusercontent.com/YangXiaocui1215/MM-BigBench/main/docs/Mean_Relative_Gain_Instructions.csv", onchange="updateTable(this.value)"/>
+            <input id="mean_relative_gain_instructions" name="evaluator" type="radio" value="https://raw.githubusercontent.com/declare-lab/MM-BigBench/main/docs/Mean_Relative_Gain_Instructions.csv", onchange="updateTable(this.value)"/>
             <label for="mean_relative_gain_instructions" onclick="">Mean Relative Gain of Instructions</label>
 
-            <input id="adaptability" name="evaluator" type="radio" value="https://raw.githubusercontent.com/YangXiaocui1215/MM-BigBench/main/docs/Adaptability.csv", onchange="updateTable(this.value)"/>
+            <input id="adaptability" name="evaluator" type="radio" value="https://raw.githubusercontent.com/declare-lab/MM-BigBench/main/docs/Adaptability.csv", onchange="updateTable(this.value)"/>
             <label for="adaptability" onclick="">Adaptability Between Models and Instructions</label>
 
-            <input id="best_performance_few_data" name="evaluator" type="radio" value="https://raw.githubusercontent.com/YangXiaocui1215/MM-BigBench/main/docs/best_performance_few_data.csv", onchange="updateTable(this.value)"/>
+            <input id="best_performance_few_data" name="evaluator" type="radio" value="https://raw.githubusercontent.com/declare-lab/MM-BigBench/main/docs/best_performance_few_data.csv", onchange="updateTable(this.value)"/>
             <label for="best_performance_few_data" onclick="">Best Performace on Test Subsets</label>
 
 
@@ -304,11 +304,11 @@
     const table = document.getElementById('leaderboard');
 
     const urls = {
-        'best_performance': "https://raw.githubusercontent.com/YangXiaocui1215/MM-BigBench/main/docs/best_performance.csv",
-        'mean_relative_gain_models': "https://raw.githubusercontent.com/YangXiaocui1215/MM-BigBench/main/docs/Mean_Relative_Gain_Models.csv",
-        'mean_relative_gain_instructions': "https://raw.githubusercontent.com/YangXiaocui1215/MM-BigBench/main/docs/Mean_Relative_Gain_Instructions.csv",
-        'adaptability': "https://raw.githubusercontent.com/YangXiaocui1215/MM-BigBench/main/docs/Adaptability.csv",
-        'best_performance_few_data': "https://raw.githubusercontent.com/YangXiaocui1215/MM-BigBench/main/docs/best_performance_few_data.csv",
+        'best_performance': "https://raw.githubusercontent.com/declare-lab/MM-BigBench/main/docs/best_performance.csv",
+        'mean_relative_gain_models': "https://raw.githubusercontent.com/declare-lab/MM-BigBench/main/docs/Mean_Relative_Gain_Models.csv",
+        'mean_relative_gain_instructions': "https://raw.githubusercontent.com/declare-lab/MM-BigBench/main/docs/Mean_Relative_Gain_Instructions.csv",
+        'adaptability': "https://raw.githubusercontent.com/declare-lab/MM-BigBench/main/docs/Adaptability.csv",
+        'best_performance_few_data': "https://raw.githubusercontent.com/declare-lab/MM-BigBench/main/docs/best_performance_few_data.csv",
     }
 
     let currentUrl = urls['best_performance'];
