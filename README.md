@@ -1,5 +1,5 @@
 # MM-BigBench: Evaluating Multimodal Models on Multimodal Content Comprehension Tasks
-[Paper](https://arxiv.org/abs/2310.09036) | [Data](https://github.com/declare-lab/MM-BigBench/tree/main/multimodal_data)
+[Paper](https://arxiv.org/abs/2310.09036) | [Data](https://github.com/declare-lab/MM-BigBench/tree/main/multimodal_data)[Leaderboard](https://declare-lab.github.io/MM-BigBench/)
 <p align="center">
   <img src="Figure/mm-bigbench.png" alt="" width="200" height="300">
 </p>
@@ -40,6 +40,10 @@ In this project, we introduce a comprehensive assessment framework called **MM-B
 
 
 Note: Refer to [Setting Models](multimodal_eval_main/models/README.md) for you.
+
+### Results
+
+For detailed results, please go to our [MM-BigBench leaderboard]([https://declare-lab.net/instruct-eval/](https://declare-lab.github.io/MM-BigBench/))
 
 ## Setup
 
