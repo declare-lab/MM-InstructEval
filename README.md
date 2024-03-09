@@ -39,7 +39,7 @@ In this project, we introduce a comprehensive assessment framework called **MM-B
 |InstructBLIP | Multimodal|[InstructBLIP](https://github.com/salesforce/LAVIS/tree/main/projects/instructblip#instructblip-towards-general-purpose-vision-language-models-with-instruction-tuning) | [Paper](https://arxiv.org/abs/2305.06500) | FlanT5-XXL | ViT-g/14 | 12.31B | 0.45B |
 
 
-Note: Refer to [Setting Models](multimodal_eval_main/models/README.md) for you.
+Note: Refer to [Setting Models](multimodal_eval_main/models/README.md) for more information.
 
 ### Results
 
