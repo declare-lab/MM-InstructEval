@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>MM-BigBench Leaderboard</title>
+
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-VWV023WWP4"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+
+        gtag('config', 'G-VWV023WWP4');
+    </script>
+    <!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"> -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link rel="icon" href="https://raw.githubusercontent.com/declare-lab/MM-BigBench/main/Figure/mm-bigbench.png">
+    <link href="https://cdn.jsdelivr.net/css-toggle-switch/latest/toggle-switch.css" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Roboto', Arial, sans-serif;
+            margin: 0;
+/*            padding: 50px 20px;*/
+            background-color: #f7f7f2;
+            background-size: cover; 
+/*            background-attachment: fixed;*/
+            color: #4e4e4e;
+        }
+
+        .container {
+            max-width: 2000px;
+            margin: auto;
+            background: #fff;
+            padding: 20px;
+            box-shadow: 0px 0px 10px rgba(0,0,0,0.1);
+            border-radius: 10px;
+        }
+
+        #branding {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        #branding h1 {
+            margin: 0;
+            font-size: 2.2em;
+            color: #4a4a4a;
+        }
+
+        h2 {
+            margin: 0;
+            font-size: 1.2em;
+            color: #888;
+        }
+
+        table {
+            width: 100%;
+            margin: auto;
+            overflow: auto;
+            font-size: 0.9em;
+            border-collapse: collapse;
+            table-layout: auto;
+/*            white-space: nowrap;*/
+        }
+
+        table th,
+        table td {
+            padding: 10px;
+            word-wrap: break-word;
+            vertical-align: middle;
+            text-align: left;
+        }
+
+        table th {
+            border-bottom: 2px solid #ddd;
+        }
+
+        table tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        table tr:hover {
+            background-color: #e8e8e8;
+        }
+
+        .switch-toggle {
+            display: inline-block;
+            vertical-align: middle;
+        }
+
+        .switch-toggle input+label {
+            padding: 3px 3px;
+            margin-right: 5px;
+            cursor: pointer;
+            background-color: #e4e4e4;
+            border: 1px solid transparent;
+            font-size: 16px;
+            transition: all 0.2s;
+            border-radius: 5px;
+        }
+
+        .switch-toggle input:checked+label {
+            border-color: #4caf50;
+            color: #4caf50;
+            background-color: #f2f2f2;
+        }
+
+        .switch-toggle input:not(:checked)+label:hover {
+            color: #4caf50;
+            box-shadow: none !important;
+            user-select: none;
+            background-color: #f2f2f2;
+        }
+
+        .toggle-line {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 20px;
+            font-size: 17px;
+        }
+
+        .toggle-line .switch-toggle {
+            margin: 0 10px;
+        }
+
+        a {
+            color: #4caf50;
+            text-decoration: none;
+            transition: all 0.2s;
+        }
+
+        a:hover {
+            color: #4caf50;
+            text-decoration: underline;
+        }
+
+        .center {
+            text-align: center;
+            font-size: 10px;
+        }
+    </style>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
+</head>
+
+<body>
+    <div class="container">
+        <div id="branding">
+            <h1>MM-BigBench
+                <a href="https://github.com/declare-lab/MM-BigBench">
+                    <img src="https://raw.githubusercontent.com/declare-lab/MM-BigBench/main/Figure/mm-bigbench.png"
+                        alt="Logo" style="height: 2em; vertical-align: middle;"></a>
+                Leaderboard
+            </h1>
+            <br>
+            <h2> Evaluating (Multimodal) Large Language Models on Multimodal Content Comprehension Tasks</h2>
+        </div>
+
+        <div style="text-align: center;">
+            <a href="https://github.com/declare-lab/MM-BigBench" style="display: inline-block;">
+                <i class="fab fa-github"></i> Github
+            </a>
+
+            <a href="https://arxiv.org/abs/2307.06281" style="display: inline-block;"> 
+               <i class="far fa-file"></i> Paper 
+            </a>
+        </div>
+    <div class="toggle-line">
+        Benchmark:
+        <div class="switch-toggle switch-evaluator" style="margin-right: 4em">
+
+            <input id="best_performance" name="evaluator" type="radio" checked="checked" value="https://raw.githubusercontent.com/YangXiaocui1215/MM-BigBench/main/docs/best_performance.csv" onchange="updateTable(this.value)" />
+            <label for="best_performance" onclick="">Best Performace on Full Test Datasets</label>
+
+            <input id="mean_relative_gain_models" name="evaluator" type="radio" value="https://raw.githubusercontent.com/YangXiaocui1215/MM-BigBench/main/docs/Mean_Relative_Gain_Models.csv", onchange="updateTable(this.value)"/>
+            <label for="mean_relative_gain_models" onclick="">Mean Relative Gain of Models</label>
+
+            <input id="mean_relative_gain_instructions" name="evaluator" type="radio" value="https://raw.githubusercontent.com/YangXiaocui1215/MM-BigBench/main/docs/Mean_Relative_Gain_Instructions.csv", onchange="updateTable(this.value)"/>
+            <label for="mean_relative_gain_instructions" onclick="">Mean Relative Gain of Instructions</label>
+
+            <input id="adaptability" name="evaluator" type="radio" value="https://raw.githubusercontent.com/YangXiaocui1215/MM-BigBench/main/docs/Adaptability.csv", onchange="updateTable(this.value)"/>
+            <label for="adaptability" onclick="">Adaptability Between Models and Instructions</label>
+
+            <input id="best_performance_few_data" name="evaluator" type="radio" value="https://raw.githubusercontent.com/YangXiaocui1215/MM-BigBench/main/docs/best_performance_few_data.csv", onchange="updateTable(this.value)"/>
+            <label for="best_performance_few_data" onclick="">Best Performace on Test Subsets</label>
+
+
+        </div>
+    </div>
+
+    <div class="center">
+        <p> Hint: you can click on the column to sort based on that column </p>
+    </div>
+    <table id="leaderboard">
+    </table>
+
+
+    <div id="documentation">
+
+
+        <br> <br>
+        <h2>Why?</h2>
+
+        <p>
+        Multimodal Large Language Models (MLLMs), harnessing the formidable capabilities of Large Language Models (LLMs), demonstrate outstanding performance across a spectrum of multimodal tasks.The emergence of recent research including but not limited to <a href="https://github.com/BradyFU/Awesome-Multimodal-Large-Language-Models/tree/Evaluation">MME</a>, <a href="https://opencompass.org.cn/MMBench">MMBench</a>, <a href="https://github.com/AILab-CVC/SEED-Bench">SEED-Bench</a>,  <a href="https://github.com/OpenGVLab/Multi-Modality-Arena?tab=readme-ov-file">LVLM-eHub</a>,  <a href="https://github.com/yuweihao/MM-Vet">MM-Vet</a>,  <a href="https://github.com/MMMU-Benchmark/MMMU">MMMU</a>,  <a href="https://github.com/FreedomIntelligence/MLLM-Bench">MLLM-Bench</a>, and others, has predominantly focused on appraising the required traditional vision-language multimodal capabilities of MLLMs in the tasks primarily driven by visual content (vision+text question) like Visual Question Answering (VQA) and Video Question Answering (VideoQA). 
+        <br><br>
+        However, there is limited understanding about the performance of MLLMs in multimodal content comprehension tasks (vison-text context+text question), such as Multimodal Sentiment Analysis (MSA), Multimodal Aspect-Based Sentiment Analysis (MABSA), Multimodal Hateful Memes Recognition (MHMR), Multimodal Sarcasm Recognition (MSR), Multimodal Relation Extraction (MRE), and the Visual Question Answering with Text Context (VQAC). This leaves the performance of various MLLMs in multimodal content comprehension tasks that rely on text and image modalities largely unexplored.
+        <br><br>
+        To address the aforementioned gap, we conduct the comprehensive evaluation involving 30 publicly available models, including 22 MLLMs, across a diverse set of 14 datasets covering 6 distinct tasks. Our primary focus is to assess the performance of various MLLMs in the context of tasks involving the comprehension of multimodal content, specifically text-image pairs. We also aim to establish benchmarks across a range of MLLMs for diverse multimodal content comprehension tasks. These tasks not only require conventional vision-language multimodal  capabilities in the models but also demand a deep understanding of multimodal content for classification (sentiment analysis, hate speech, sarcasm, etc.) or reasoning (visual question answering).
+        <br><br>
+        We propose the comprehensive assessment framework called MM-BigBench, incorporating a diverse set of metrics to conduct a thorough evaluation of various models and instructions in the domain of multimodal content comprehension tasks. MM-BigBench serves as a complement to existing zero-shot evaluation studies of MLLMs, offering a more comprehensive and holistic assessment when combined with prior related work.
+        <br><br>
+        Notably, we support most models from HuggingFace Transformers 🤗
+        </p>
+
+        <br><br>
+
+        <h2>Diverse Tasks</h2>
+
+        <h3>Visual Question Answering with Text Context (VQAC)</h3>
+
+        <a href="https://scienceqa.github.io/#dataset">ScienceQA</a>
+
+        <h3> Multimodal Sentiment Analysis (MSA)</h3>
+
+        <a href="http://mcrlab.net/research/mvsa-sentiment-analysis-on-multi-view-social-data/">MVSA-Single</a>;
+        <a href="http://mcrlab.net/research/mvsa-sentiment-analysis-on-multi-view-social-data/">MVSA-Multiple</a>;
+        <a href="https://github.com/YangXiaocui1215/MVAN">MVSA-TumEmo</a>;
+        <a href="http://multicomp.cs.cmu.edu/resources/cmu-mosi-dataset/">MOSI-2</a>;
+        <a href="http://multicomp.cs.cmu.edu/resources/cmu-mosi-dataset/">MOSI-7</a>;
+        <a href="http://multicomp.cs.cmu.edu/resources/cmu-mosei-dataset/">MOSEI-2</a>;
+        <a href="http://multicomp.cs.cmu.edu/resources/cmu-mosei-dataset/">MOSEI-7</a>.
+
+        <h3>  Multimodal Aspect-Based Sentiment Analysis (MABSA)</h3>
+
+        <a href="https://github.com/jefferyYu/TomBERT">Twitter-2015</a>;
+        <a href="https://github.com/jefferyYu/TomBERT">Twitter-2017</a>;
+        <a href="https://github.com/DrJZhou/MASAD">MASAD</a>.
+
+        <h3>  Multimodal Hateful Memes Recognition (MHMR)</h3>
+
+        <a href="https://github.com/facebookresearch/fine_grained_hateful_memes">Hate</a>
+
+        <h3>Multimodal Sarcasm Recognition (MSR)</h3>
+
+        <a href="https://github.com/headacheboy/data-of-multimodal-sarcasm-detection">Sarcasm</a>
+
+        <h3>Multimodal Relation Extraction (MRE)</h3>
+
+        <a href="https://github.com/thecharm/Mega">MNRE</a>
+
+        <br><br>
+
+        <h2>Comprehensive Metrics (Details can be found in our paper and code.)</h2>
+
+        <h3>Best Performance</h3>
+     
+        Considering the performance variations across different instructions, we report the best performance, achieved by each model among all instructions on each dataset. This metric highlights the upper bounds of performance for different models. The "Best Performance on Full Test Datasets" page displays the best performnce on the full test datasets, except for GPT-4V model.
+        <br>
+        Notes: Since GPT-4V is expensive and has limited usage, we only evaluate a subset of the test dataset. This subset is randomly sampled from the test dataset and accounts for 10% of the test data. The related results are list in the "Best Performance on Test Subsets" page.
+
+
+        <h3>Mean Relative Gain of Models</h3>
+   
+        Given the diversity of models and instructions, it's understandable that we observe substantial variations in accuracy for each dataset, contingent on different models and various instructions.
+        Therefore, we leverage aggregating metrics to evaluate the overall performance across models.
+
+        <h3>Mean Relative Gain of Instructions</h3>
+  
+        Mean Relative Gains of Instructions are used to meaningfully compare and summarize performance of different instructions across all models.
+
+        <h3>Adaptability</h3>
+
+        Different instructions have a significant impact on model performance. To quantify the adaptability between LMs and instructions, we propose the Global Top-K Hit Ratio, GHR@K, as a metric to evaluate the performance of each instruction on different models. This metric measures the proportion of times each instruction achieves top-K performance on a specific model across all datasets.
+
+        <pre>
+           
+        @inproceedings{Yang2023MMBigBenchEM,
+            title={MM-BigBench: Evaluating Multimodal Models on Multimodal Content Comprehension Tasks},
+            author={
+               Xiaocui Yang and Wenfang Wu and Shi Feng and Ming Wang and Daling Wang and Yang Li and Qi Sun and 
+               Yifei Zhang and Xiaoming Fu and Soujanya Poria},
+            year={2023},
+            url={https://api.semanticscholar.org/CorpusID:264127863}
+            }
+            
+        </pre>
+    </div>
+
+</div>
+
+<script>
+    const best_performanceRadio = document.getElementById('best_performance');
+    const mean_relative_gain_modelsRadio = document.getElementById('mean_relative_gain_models');
+    const mean_relative_gain_instructionsRadio = document.getElementById('mean_relative_gain_instructions');
+    const adaptabilityRadio = document.getElementById('adaptability');
+    const best_performance_few_dataRadio = document.getElementById('best_performance_few_data');
+
+
+
+    const table = document.getElementById('leaderboard');
+
+    const urls = {
+        'best_performance': "https://raw.githubusercontent.com/YangXiaocui1215/MM-BigBench/main/docs/best_performance.csv",
+        'mean_relative_gain_models': "https://raw.githubusercontent.com/YangXiaocui1215/MM-BigBench/main/docs/Mean_Relative_Gain_Models.csv",
+        'mean_relative_gain_instructions': "https://raw.githubusercontent.com/YangXiaocui1215/MM-BigBench/main/docs/Mean_Relative_Gain_Instructions.csv",
+        'adaptability': "https://raw.githubusercontent.com/YangXiaocui1215/MM-BigBench/main/docs/Adaptability.csv",
+        'best_performance_few_data': "https://raw.githubusercontent.com/YangXiaocui1215/MM-BigBench/main/docs/best_performance_few_data.csv",
+    }
+
+    let currentUrl = urls['best_performance'];
+
+    let globalData = [];
+
+    function updateTable(url) {   
+        Papa.parse(url, {
+            download: true,
+            header: true,
+            complete: function(results) {
+                globalData = results.data;
+                // Filter out empty rows
+                globalData = globalData.filter(row => Object.values(row).some(value => value !== ""));
+                displayData(globalData);
+            }
+        });
+    }
+
+    function displayData(data) {
+        let table = document.getElementById('leaderboard');
+
+        // Clear out previous data
+        table.innerHTML = '';
+
+        // Create header row
+        let headerRow = document.createElement('tr');
+        data[0] && Object.keys(data[0]).forEach(key => {
+            let headerCell = document.createElement('th');
+            headerCell.innerText = key;
+            headerCell.onclick = function() { sortTable(key); }; // On click, sort table by this column
+            headerRow.appendChild(headerCell);
+        });
+        table.appendChild(headerRow);
+
+        // Create data rows
+        data.forEach(row => {
+            let dataRow = document.createElement('tr');
+            Object.values(row).forEach(val => {
+                let dataCell = document.createElement('td');
+                // Check if the value is a markdown link
+                let match = val.match(/\[([^\]]+)\]\(([^)]+)\)/);
+                if (match) {
+                    let link = document.createElement('a');
+                    link.href = match[2];
+                    link.innerText = match[1];
+                    dataCell.appendChild(link);
+                } else {
+                    dataCell.innerText = val;
+                }
+                dataRow.appendChild(dataCell);
+            });
+            table.appendChild(dataRow);
+        });
+    }
+
+    function sortTable(sortKey) {
+        // Sort the global data array based on sortKey
+        globalData.sort((a, b) => {
+            // Type checking and comparison
+            let valueA = isNaN(a[sortKey]) ? a[sortKey].toLowerCase() : +a[sortKey];
+            let valueB = isNaN(b[sortKey]) ? b[sortKey].toLowerCase() : +b[sortKey];
+
+            if(valueA < valueB) return 1;
+            if(valueA > valueB) return -1;
+            return 0;
+        });
+
+        // Redisplay the sorted table
+        displayData(globalData);
+    }
+
+    updateTable(urls['best_performance']);
+
+    best_performanceRadio.addEventListener('click', function () {
+        currentUrl = urls['best_performance'];
+        updateTable(currentUrl);
+    });
+
+
+    mean_relative_gain_modelsRadio.addEventListener('click', function () {
+        currentUrl = urls['mean_relative_gain_models'];
+        updateTable(currentUrl);
+    });
+
+    mean_relative_gain_instructionsRadio.addEventListener('click', function () {
+        currentUrl = urls['mean_relative_gain_instructions'];
+        updateTable(currentUrl);
+    });
+
+    adaptabilityRadio.addEventListener('click', function () {
+        currentUrl = urls['adaptability'];
+        updateTable(currentUrl);
+    });
+
+    best_performance_few_dataRadio.addEventListener('click', function () {
+        currentUrl = urls['best_performance_few_data'];
+        updateTable(currentUrl);
+    });
+
+
+    
+
+
+</script>
+
+
+</body>
+
+
+
+</html>
