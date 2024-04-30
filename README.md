@@ -1,4 +1,4 @@
-# MM-MM-InstructEval: Zero-Shot Evaluation of (Multimodal) Large Language Models on Multimodal Reasoning Tasks
+# MM-InstructEval: Zero-Shot Evaluation of (Multimodal) Large Language Models on Multimodal Reasoning Tasks
 [Paper](https://arxiv.org/abs/2310.09036) | [Data](https://github.com/declare-lab/MM-BigBench/tree/main/multimodal_data) | [Leaderboard](https://declare-lab.github.io/MM-InstructEval/)
 <p align="center">
   <img src="Figure/mm-bigbench.png" alt="" width="200" height="300">
