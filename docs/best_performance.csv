@@ -1,4 +1,4 @@
-Model,ScienceQA,PuzzleVQA,MMMU,MVSA-Single,MVSA-Multiple,TumEmo,MOSI-2,MOSI-7,MOSEI-2,MOSEI-7,Twitter-2015,Twitter-2017,MASAD,Hate,Sarcasm,MNRE,Total,Total<sup>★</sup>
+Model,ScienceQA,PuzzleVQA,MMMU,MVSA-Single,MVSA-Multiple,TumEmo,MOSI-2,MOSI-7,MOSEI-2,MOSEI-7,Twitter-2015,Twitter-2017,MASAD,Hate,Sarcasm,MNRE,Total,Total^{★}
 [ChatGPT](https://openai.com/blog/chatgpt),69.41,-,-,56.55,53.18,48.17,89.60,44.44,84.97,40.77,65.48,59.97,72.70,60.84,69.02,38.28,-,853.38
 [LLaMA1-7B-hf](https://huggingface.co/baffo32/decapoda-research-llama-7B-hf),36.19,-,-,67.23,60.72,38.26,82.01,34.26,75.62,15.50,58.53,46.43,65.67,50.40,58.99,2.66,-,692.47
 [LLaMA1-13B-hf](https://huggingface.co/srikanthmalla/decapoda-research-llama-13b-hf/tree/main),43.33,-,-,66.99,68.82,44.68,72.10,34.11,79.55,28.74,52.07,47.24,65.49,49.20,57.53,19.22,-,729.07
