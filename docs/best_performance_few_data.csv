@@ -1,5 +1,4 @@
 Model,ScienceQA,PuzzleVQA,MMMU,MVSA-Single,MVSA-Multiple,TumEmo,MOSI-2,MOSI-7,MOSEI-2,MOSEI-7,Twitter-2015,Twitter-2017,MASAD,Hate,Sarcasm,MNRE,Total,Total^{★}
-## LLMs
 [ChatGPT](https://openai.com/blog/chatgpt),69.46,-,-,64.29,52.98,45.11,87.88,52.24,84.95,40.78,58.62,61.44,73.89,66.67,72.46,21.86,-,852.63
 [LLaMA1-7B-hf](https://huggingface.co/baffo32/decapoda-research-llama-7B-hf),33.00,-,-,64.29,63.16,39.60,75.76,34.33,75.99,15.36,59.26,48.46,65.18,52.00,59.75,1.09,-,687.23
 [LLaMA1-13B-hf](https://huggingface.co/srikanthmalla/decapoda-research-llama-13b-hf/tree/main),41.87,-,-,64.29,69.08,44.77,72.73,38.81,81.72,29.33,46.30,53.08,66.40,50.00,57.26,10.38,-,726.02
@@ -9,7 +8,6 @@ Model,ScienceQA,PuzzleVQA,MMMU,MVSA-Single,MVSA-Multiple,TumEmo,MOSI-2,MOSI-7,MO
 [Gemma-7B](https://huggingface.co/google/gemma-7b-it),52.71,-,-,73.81,63.82,43.29,81.82,40.30,76.34,24.30,43.84,52.35,67.81,58.00,64.32,14.21,-,756.92
 [Flan-T5-xxl](https://huggingface.co/google/flan-t5-xxl),73.40,-,-,69.05,66.45,49.21,90.91,43.28,84.95,43.58,68.52,66.15,75.71,50.00,76.35,18.03,-,875.59
 
-## MLLMs
 [GPT-4V](https://platform.openai.com/docs/guides/vision),79.80,31.11, 57.78, 76.19,71.05,50.58,90.91,61.19,87.10,49.44,53.85,60.16,78.95,78.00,76.76,54.29, 1057.16, 968.27
 [Claude3-V-opus](https://www.anthropic.com/news/claude-3-family),76.35,36.11, 53.33,80.95, 69.08, 46.15, 78.79, 32.84, 79.93, 30.73, 38.46, 54.47, 76.32, 66.00, 71.37, 57.14, 948.02, 858.58
 [Gemini-V](https://ai.google.dev/?gad_source=1&gclid=CjwKCAiA6KWvBhAREiwAFPZM7nRlqCw_2aeZ4cxrQgLHumHdCWiVqSk73-kR7bRJXcxWxlGGt-r1WxoCCjEQAvD_BwE),84.73,30.56, 60.00,73.81,70.20,51.75,87.88,55.22,87.41,39.22,49.75,57.68,82.15,68.09,56.43,34.97,989.85, 899.29
