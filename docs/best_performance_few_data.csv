@@ -1,31 +1,35 @@
-Model,ScienceQA,MVSA-Single,MVSA-Multiple,TumEmo,MOSI-2,MOSI-7,MOSEI-2,MOSEI-7,Twitter-2015,Twitter-2017,MASAD,Hate,Sarcasm,MNRE,Total
-[ChatGPT](https://openai.com/blog/chatgpt),69.46,64.29,52.98,45.11,87.88,52.24,84.95,40.78,58.62,61.44,73.89,66.67,72.46,21.86,852.63
-[LLaMA1-7B-hf](https://huggingface.co/baffo32/decapoda-research-llama-7B-hf),33.00,64.29,63.16,39.60,75.76,34.33,75.99,15.36,59.26,48.46,65.18,52.00,59.75,1.09,687.23
-[LLaMA1-13B-hf](https://huggingface.co/srikanthmalla/decapoda-research-llama-13b-hf/tree/main),41.87,64.29,69.08,44.77,72.73,38.81,81.72,29.33,46.30,53.08,66.40,50.00,57.26,10.38,726.02
-[LLaMA2-7B-hf](https://huggingface.co/meta-llama/Llama-2-7b-hf),46.31,66.67,70.39,41.92,60.61,23.88,77.78,15.08,59.26,50.00,66.19,50.00,55.60,1.09,684.78
-[LLaMA2-13B-hf](https://huggingface.co/meta-llama/Llama-2-13b-hf),57.14,66.67,69.74,47.84,80.30,32.84,82.08,22.91,62.96,48.46,69.43,58.00,60.17,10.93,769.47
-[Mixtral-AWQ](https://huggingface.co/ybelkada/Mixtral-8x7B-Instruct-v0.1-AWQ),69.95,59.52,57.24,44.98,83.33,43.28,77.78,36.87,53.70,61.54,70.45,58.00,65.56,38.80,821.00
-[Gemma-7B](https://huggingface.co/google/gemma-7b-it),52.71,73.81,63.82,43.29,81.82,40.30,76.34,24.30,43.84,52.35,67.81,58.00,64.32,14.21,756.92
-[Flan-T5-xxl](https://huggingface.co/google/flan-t5-xxl),73.40,69.05,66.45,49.21,90.91,43.28,84.95,43.58,68.52,66.15,75.71,50.00,76.35,18.03,875.59
-[GPT-4V](https://platform.openai.com/docs/guides/vision),79.80,76.19,71.05,50.58,90.91,61.19,87.10,49.44,53.85,60.16,78.95,78.00,76.76,54.29,968.27
-[Gemini-V](https://ai.google.dev/?gad_source=1&gclid=CjwKCAiA6KWvBhAREiwAFPZM7nRlqCw_2aeZ4cxrQgLHumHdCWiVqSk73-kR7bRJXcxWxlGGt-r1WxoCCjEQAvD_BwE),84.73,73.81,70.20,51.75,87.88,55.22,87.41,39.22,49.75,57.68,82.15,68.09,56.43,34.97,899.29
-[OpenFlamingo](https://huggingface.co/openflamingo/OpenFlamingo-9B-deprecated),39.90,52.38,63.82,28.30,78.79,25.37,78.49,12.85,57.41,53.08,67.61,50.00,51.87,2.19,662.06
-[Fromage](https://github.com/chiayewken/multimodal-inference/releases/download/v0.1.0/fromage_model.zip),37.44,40.48,25.66,24.18,56.06,22.39,45.88,9.50,20.37,30.77,37.85,40.00,43.15,0,433.73
-[LLaVA-v0-7B](https://huggingface.co/liuhaotian/LLaVA-7b-delta-v0),43.35,80.95,65.13,31.05,72.73,29.85,76.34,17.88,35.19,51.54,73.08,40.00,45.23,3.83,666.15
-[LLaVA-v0-13B](https://huggingface.co/liuhaotian/LLaVA-13b-delta-v0),45.81,78.57,69.08,38.54,80.30,34.33,77.42,27.09,38.89,47.69,77.73,48.00,48.96,2.73,715.14
-[LLaVA-v1.6-7B](https://huggingface.co/liuhaotian/llava-v1.6-vicuna-7b),68.97,61.90,69.08,45.62,84.85,35.82,82.80,25.42,53.70,60.00,75.10,56.00,60.58,12.02,791.86
-[LLaVA-v1.6-13B](https://huggingface.co/liuhaotian/llava-v1.6-vicuna-13b),72.91,71.43,59.21,53.96,86.36,41.79,74.91,44.69,53.70,61.54,78.54,60.00,67.63,13.66,840.33
-[MiniGPT4](https://drive.google.com/file/d/1a4zLvaiDBr-36pasffmgpvH5P7CKmpze/view),55.67,71.43,69.08,52.69,84.85,41.79,83.15,36.31,40.74,51.54,76.11,52.00,57.26,1.64,774.26
-[mPLUG-Owl](https://huggingface.co/MAGAer13/mplug-owl-llama-7b),40.89,50.00,46.71,31.15,69.70,32.84,59.50,19.55,30.05,36.05,58.91,48.00,46.47,2.73,572.55
-[mPLUG-Owl2.1](https://huggingface.co/Mizukiluke/mplug_owl_2_1),61.08,64.29,63.82,47.62,81.82,38.81,75.99,34.08,64.81,59.23,74.70,58.00,57.68,10.93,792.86
-[LLaMA-AdapterV2](https://github.com/OpenGVLab/LLaMA-Adapter),61.58,78.57,69.74,39.92,83.33,44.78,81.72,16.48,37.04,52.31,75.91,52.00,52.70,3.28,749.36
-[VPGTrans](https://github.com/VPGTrans/VPGTrans?tab=readme-ov-file),41.87,69.05,67.11,47.10,75.76,31.34,76.34,37.71,41.67,40.77,73.08,42.00,55.19,1.09,700.08
-[Multimodal-GPT](https://github.com/open-mmlab/Multimodal-GPT),37.93,57.14,64.47,30.62,66.67,27.12,77.42,10.06,59.26,50.00,68.22,50.00,60.17,1.64,660.72
-[LaVIN-7B](https://github.com/luogen1996/LaVIN),77.34,52.38,38.82,32.95,69.70,28.36,70.97,29.33,57.14,53.29,64.17,50.00,59.34,6.56,690.35
-[LaVIN-13B](https://github.com/luogen1996/LaVIN),72.91,61.90,47.37,35.59,77.27,28.36,72.76,27.93,43.35,36.99,64.98,46.00,59.34,5.46,680.21
-[Lynx](https://github.com/bytedance/lynx-llm/tree/main),36.45,73.81,68.42,42.13,75.76,25.37,74.55,9.78,42.36,48.28,71.86,50.00,44.81,5.46,669.04
-[Fuyu-8B](https://huggingface.co/adept/fuyu-8b),45.32,47.62,48.68,49.52,81.82,16.42,77.42,40.22,63.05,57.68,74.49,60.00,63.90,1.09,727.23
-[LaVIT](https://huggingface.co/rain1011/LaVIT-7B-v2),43.35,66.67,69.08,42.13,75.76,29.85,65.59,15.92,37.44,38.87,64.57,56.00,53.11,0.55,658.89
-[Qwen-VL-Chat](https://huggingface.co/Qwen/Qwen-VL-Chat),64.04,66.67,69.08,49.42,80.30,34.33,78.85,43.58,66.50,61.13,74.09,50.00,63.07,10.93,811.99
-[BLIP-2](https://huggingface.co/Salesforce/blip2-flan-t5-xxl),76.85,69.05,67.11,49.95,90.91,47.76,84.95,42.74,62.96,64.80,78.74,54.00,77.18,19.67,886.67
-[InstructBLIP](https://huggingface.co/Salesforce/instructblip-flan-t5-xxl),76.35,76.19,67.76,52.38,89.39,43.28,84.23,44.97,53.70,68.00,81.38,54.00,78.42,19.67,889.72
+Model,ScienceQA,PuzzleVQA,MMMU,MVSA-Single,MVSA-Multiple,TumEmo,MOSI-2,MOSI-7,MOSEI-2,MOSEI-7,Twitter-2015,Twitter-2017,MASAD,Hate,Sarcasm,MNRE,Total,Total^{★}
+## LLMs
+[ChatGPT](https://openai.com/blog/chatgpt),69.46,-,-,64.29,52.98,45.11,87.88,52.24,84.95,40.78,58.62,61.44,73.89,66.67,72.46,21.86,-,852.63
+[LLaMA1-7B-hf](https://huggingface.co/baffo32/decapoda-research-llama-7B-hf),33.00,-,-,64.29,63.16,39.60,75.76,34.33,75.99,15.36,59.26,48.46,65.18,52.00,59.75,1.09,-,687.23
+[LLaMA1-13B-hf](https://huggingface.co/srikanthmalla/decapoda-research-llama-13b-hf/tree/main),41.87,-,-,64.29,69.08,44.77,72.73,38.81,81.72,29.33,46.30,53.08,66.40,50.00,57.26,10.38,-,726.02
+[LLaMA2-7B-hf](https://huggingface.co/meta-llama/Llama-2-7b-hf),46.31,-,-,66.67,70.39,41.92,60.61,23.88,77.78,15.08,59.26,50.00,66.19,50.00,55.60,1.09,-,684.78
+[LLaMA2-13B-hf](https://huggingface.co/meta-llama/Llama-2-13b-hf),57.14,-,-,66.67,69.74,47.84,80.30,32.84,82.08,22.91,62.96,48.46,69.43,58.00,60.17,10.93,-,769.47
+[Mixtral-AWQ](https://huggingface.co/ybelkada/Mixtral-8x7B-Instruct-v0.1-AWQ),69.95,-,-,59.52,57.24,44.98,83.33,43.28,77.78,36.87,53.70,61.54,70.45,58.00,65.56,38.80,-,821.00
+[Gemma-7B](https://huggingface.co/google/gemma-7b-it),52.71,-,-,73.81,63.82,43.29,81.82,40.30,76.34,24.30,43.84,52.35,67.81,58.00,64.32,14.21,-,756.92
+[Flan-T5-xxl](https://huggingface.co/google/flan-t5-xxl),73.40,-,-,69.05,66.45,49.21,90.91,43.28,84.95,43.58,68.52,66.15,75.71,50.00,76.35,18.03,-,875.59
+
+## MLLMs
+[GPT-4V](https://platform.openai.com/docs/guides/vision),79.80,31.11, 57.78, 76.19,71.05,50.58,90.91,61.19,87.10,49.44,53.85,60.16,78.95,78.00,76.76,54.29, 1057.16, 968.27
+[Claude3-V-opus](https://www.anthropic.com/news/claude-3-family),76.35,36.11, 53.33,80.95, 69.08, 46.15, 78.79, 32.84, 79.93, 30.73, 38.46, 54.47, 76.32, 66.00, 71.37, 57.14, 948.02, 858.58
+[Gemini-V](https://ai.google.dev/?gad_source=1&gclid=CjwKCAiA6KWvBhAREiwAFPZM7nRlqCw_2aeZ4cxrQgLHumHdCWiVqSk73-kR7bRJXcxWxlGGt-r1WxoCCjEQAvD_BwE),84.73,30.56, 60.00,73.81,70.20,51.75,87.88,55.22,87.41,39.22,49.75,57.68,82.15,68.09,56.43,34.97,989.85, 899.29
+[OpenFlamingo](https://huggingface.co/openflamingo/OpenFlamingo-9B-deprecated),39.90,26.67, 23.33,52.38,63.82,28.30,78.79,25.37,78.49,12.85,57.41,53.08,67.61,50.00,51.87,2.19,712.06, 662.06
+[Fromage](https://github.com/chiayewken/multimodal-inference/releases/download/v0.1.0/fromage_model.zip),37.44,19.44, 22.22,40.48,25.66,24.18,56.06,22.39,45.88,9.50,20.37,30.77,37.85,40.00,43.15,0,475.39, 433.73
+[LLaVA-v0-7B](https://huggingface.co/liuhaotian/LLaVA-7b-delta-v0),43.35,21.11, 28.89,80.95,65.13,31.05,72.73,29.85,76.34,17.88,35.19,51.54,73.08,40.00,45.23,3.83,716.15, 666.15
+[LLaVA-v0-13B](https://huggingface.co/liuhaotian/LLaVA-13b-delta-v0),45.81,12.22, 25.56,78.57,69.08,38.54,80.30,34.33,77.42,27.09,38.89,47.69,77.73,48.00,48.96,2.73,752.92, 715.14
+[LLaVA-v1.6-7B](https://huggingface.co/liuhaotian/llava-v1.6-vicuna-7b),68.97,32.22, 45.56,61.90,69.08,45.62,84.85,35.82,82.80,25.42,53.70,60.00,75.10,56.00,60.58,12.02,869.64, 791.86
+[LLaVA-v1.6-13B](https://huggingface.co/liuhaotian/llava-v1.6-vicuna-13b),72.91,32.22, 42.22,71.43,59.21,53.96,86.36,41.79,74.91,44.69,53.70,61.54,78.54,60.00,67.63,13.66,914.77, 840.33
+[MiniGPT4](https://drive.google.com/file/d/1a4zLvaiDBr-36pasffmgpvH5P7CKmpze/view),55.67,28.33, 28.89,71.43,69.08,52.69,84.85,41.79,83.15,36.31,40.74,51.54,76.11,52.00,57.26,1.64,831.48, 774.26
+[mPLUG-Owl](https://huggingface.co/MAGAer13/mplug-owl-llama-7b),40.89,26.11, 28.89,50.00,46.71,31.15,69.70,32.84,59.50,19.55,30.05,36.05,58.91,48.00,46.47,2.73,627.55, 572.55
+[mPLUG-Owl2.1](https://huggingface.co/Mizukiluke/mplug_owl_2_1),61.08,30.00, 44.44,64.29,63.82,47.62,81.82,38.81,75.99,34.08,64.81,59.23,74.70,58.00,57.68,10.93,867.30, 792.86
+[LLaMA-AdapterV2](https://github.com/OpenGVLab/LLaMA-Adapter),61.58,27.22, 27.78,78.57,69.74,39.92,83.33,44.78,81.72,16.48,37.04,52.31,75.91,52.00,52.70,3.28,804.36, 749.36
+[VPGTrans](https://github.com/VPGTrans/VPGTrans?tab=readme-ov-file),41.87,22.22, 30.00,  69.05,67.11,47.10,75.76,31.34,76.34,37.71,41.67,40.77,73.08,42.00,55.19,1.09, 752.30, 700.08
+[Multimodal-GPT](https://github.com/open-mmlab/Multimodal-GPT),37.93,22.22, 20.00, 57.14,64.47,30.62,66.67,27.12,77.42,10.06,59.26,50.00,68.22,50.00,60.17,1.64,702.94, 660.72
+[LaVIN-7B](https://github.com/luogen1996/LaVIN),77.34,27.22, 30.00,52.38,38.82,32.95,69.70,28.36,70.97,29.33,57.14,53.29,64.17,50.00,59.34,6.56,747.57, 690.35
+[LaVIN-13B](https://github.com/luogen1996/LaVIN),72.91,28.89, 25.56,61.90,47.37,35.59,77.27,28.36,72.76,27.93,43.35,36.99,64.98,46.00,59.34,5.46,734.66, 680.21
+[Lynx](https://github.com/bytedance/lynx-llm/tree/main),36.45,22.22, 20.00, 73.81,68.42,42.13,75.76,25.37,74.55,9.78,42.36,48.28,71.86,50.00,44.81,5.46,711.26, 669.04
+[Fuyu-8B](https://huggingface.co/adept/fuyu-8b),45.32,27.78, 31.11,47.62,48.68,49.52,81.82,16.42,77.42,40.22,63.05,57.68,74.49,60.00,63.90,1.09,786.12, 727.23
+[LaVIT](https://huggingface.co/rain1011/LaVIT-7B-v2),43.35,26.67, 27.78,66.67,69.08,42.13,75.76,29.85,65.59,15.92,37.44,38.87,64.57,56.00,53.11,0.55,713.34, 658.89
+[Qwen-VL-Chat](https://huggingface.co/Qwen/Qwen-VL-Chat),64.04,30.56, 37.78,66.67,69.08,49.42,80.30,34.33,78.85,43.58,66.50,61.13,74.09,50.00,63.07,10.93,880.33, 811.99
+[BLIP-2](https://huggingface.co/Salesforce/blip2-flan-t5-xxl),76.85,32.78, 43.33,69.05,67.11,49.95,90.91,47.76,84.95,42.74,62.96,64.80,78.74,54.00,77.18,19.67, 962.78, 886.67
+[InstructBLIP](https://huggingface.co/Salesforce/instructblip-flan-t5-xxl),76.35,28.89, 36.67,76.19,67.76,52.38,89.39,43.28,84.23,44.97,53.70,68.00,81.38,54.00,78.42,19.67,955.28, 889.72
