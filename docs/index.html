@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title>MM-BigBench Leaderboard</title>
+    <title>MM-InstructEval Leaderboard</title>
 
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-VWV023WWP4"></script>
@@ -15,7 +15,7 @@
     </script>
     <!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"> -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
-    <link rel="icon" href="https://raw.githubusercontent.com/declare-lab/MM-BigBench/main/Figure/mm-bigbench.png">
+    <link rel="icon" href="https://raw.githubusercontent.com/declare-lab/MM-InstructEval/main/Figure/mm-bigbench.png">
     <link href="https://cdn.jsdelivr.net/css-toggle-switch/latest/toggle-switch.css" rel="stylesheet" />
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400&display=swap" rel="stylesheet">
     <style>
@@ -149,18 +149,18 @@
 <body>
     <div class="container">
         <div id="branding">
-            <h1>MM-BigBench
-                <a href="https://github.com/declare-lab/MM-BigBench">
-                    <img src="https://raw.githubusercontent.com/declare-lab/MM-BigBench/main/Figure/mm-bigbench.png"
+            <h1>MM-InstructEval
+                <a href="https://github.com/declare-lab/MM-InstructEval">
+                    <img src="https://raw.githubusercontent.com/declare-lab/MM-InstructEval/main/Figure/mm-bigbench.png"
                         alt="Logo" style="height: 2em; vertical-align: middle;"></a>
                 Leaderboard
             </h1>
             <br>
-            <h2> Evaluating (Multimodal) Large Language Models on Multimodal Content Comprehension Tasks</h2>
+            <h2>Zero-Shot Evaluation of (Multimodal) Large Language Models on Multimodal Reasoning Tasks</h2>
         </div>
 
         <div style="text-align: center;">
-            <a href="https://github.com/declare-lab/MM-BigBench" style="display: inline-block;">
+            <a href="https://github.com/declare-lab/MM-InstructEval" style="display: inline-block;">
                 <i class="fab fa-github"></i> Github
             </a>
 
@@ -172,19 +172,19 @@
         Benchmark:
         <div class="switch-toggle switch-evaluator" style="margin-right: 4em">
 
-            <input id="best_performance" name="evaluator" type="radio" checked="checked" value="https://raw.githubusercontent.com/declare-lab/MM-BigBench/main/docs/best_performance.csv" onchange="updateTable(this.value)" />
+            <input id="best_performance" name="evaluator" type="radio" checked="checked" value="https://raw.githubusercontent.com/declare-lab/MM-InstructEval/main/docs/best_performance.csv" onchange="updateTable(this.value)" />
             <label for="best_performance" onclick="">Best Performace on Full Test Datasets</label>
 
-            <input id="mean_relative_gain_models" name="evaluator" type="radio" value="https://raw.githubusercontent.com/declare-lab/MM-BigBench/main/docs/Mean_Relative_Gain_Models.csv", onchange="updateTable(this.value)"/>
+            <input id="mean_relative_gain_models" name="evaluator" type="radio" value="https://raw.githubusercontent.com/declare-lab/MM-InstructEval/main/docs/Mean_Relative_Gain_Models.csv", onchange="updateTable(this.value)"/>
             <label for="mean_relative_gain_models" onclick="">Mean Relative Gain of Models</label>
 
-            <input id="mean_relative_gain_instructions" name="evaluator" type="radio" value="https://raw.githubusercontent.com/declare-lab/MM-BigBench/main/docs/Mean_Relative_Gain_Instructions.csv", onchange="updateTable(this.value)"/>
+            <input id="mean_relative_gain_instructions" name="evaluator" type="radio" value="https://raw.githubusercontent.com/declare-lab/MM-InstructEval/main/docs/Mean_Relative_Gain_Instructions.csv", onchange="updateTable(this.value)"/>
             <label for="mean_relative_gain_instructions" onclick="">Mean Relative Gain of Instructions</label>
 
-            <input id="adaptability" name="evaluator" type="radio" value="https://raw.githubusercontent.com/declare-lab/MM-BigBench/main/docs/Adaptability.csv", onchange="updateTable(this.value)"/>
+            <input id="adaptability" name="evaluator" type="radio" value="https://raw.githubusercontent.com/declare-lab/MM-InstructEval/main/docs/Adaptability.csv", onchange="updateTable(this.value)"/>
             <label for="adaptability" onclick="">Adaptability Between Models and Instructions</label>
 
-            <input id="best_performance_few_data" name="evaluator" type="radio" value="https://raw.githubusercontent.com/declare-lab/MM-BigBench/main/docs/best_performance_few_data.csv", onchange="updateTable(this.value)"/>
+            <input id="best_performance_few_data" name="evaluator" type="radio" value="https://raw.githubusercontent.com/declare-lab/MM-InstructEval/main/docs/best_performance_few_data.csv", onchange="updateTable(this.value)"/>
             <label for="best_performance_few_data" onclick="">Best Performace on Test Subsets</label>
 
 
@@ -207,22 +207,31 @@
         <p>
         Multimodal Large Language Models (MLLMs), harnessing the formidable capabilities of Large Language Models (LLMs), demonstrate outstanding performance across a spectrum of multimodal tasks.The emergence of recent research including but not limited to <a href="https://github.com/BradyFU/Awesome-Multimodal-Large-Language-Models/tree/Evaluation">MME</a>, <a href="https://opencompass.org.cn/MMBench">MMBench</a>, <a href="https://github.com/AILab-CVC/SEED-Bench">SEED-Bench</a>,  <a href="https://github.com/OpenGVLab/Multi-Modality-Arena?tab=readme-ov-file">LVLM-eHub</a>,  <a href="https://github.com/yuweihao/MM-Vet">MM-Vet</a>,  <a href="https://github.com/MMMU-Benchmark/MMMU">MMMU</a>,  <a href="https://github.com/FreedomIntelligence/MLLM-Bench">MLLM-Bench</a>, and others, has predominantly focused on appraising the required traditional vision-language multimodal capabilities of MLLMs in the tasks primarily driven by visual content (vision+text question) like Visual Question Answering (VQA) and Video Question Answering (VideoQA). 
         <br><br>
-        However, there is limited understanding about the performance of MLLMs in multimodal content comprehension tasks (vison-text context+text question), such as Multimodal Sentiment Analysis (MSA), Multimodal Aspect-Based Sentiment Analysis (MABSA), Multimodal Hateful Memes Recognition (MHMR), Multimodal Sarcasm Recognition (MSR), Multimodal Relation Extraction (MRE), and the Visual Question Answering with Text Context (VQAC). This leaves the performance of various MLLMs in multimodal content comprehension tasks that rely on text and image modalities largely unexplored.
+        However, there is limited understanding about the performance of MLLMs in multimodal reasoning tasks with vision-text contexts (vison-text context+text question), such as Multimodal Sentiment Analysis (MSA), Multimodal Aspect-Based Sentiment Analysis (MABSA), Multimodal Hateful Memes Recognition (MHMR), Multimodal Sarcasm Recognition (MSR), Multimodal Relation Extraction (MRE), and the Visual Question Answering with Text Context (VQAC). This leaves the performance of various MLLMs in multimodal reasoning tasks with vision-text contexts that rely on text and image modalities largely unexplored.
         <br><br>
-        To address the aforementioned gap, we conduct the comprehensive evaluation involving 30 publicly available models, including 22 MLLMs, across a diverse set of 14 datasets covering 6 distinct tasks. Our primary focus is to assess the performance of various MLLMs in the context of tasks involving the comprehension of multimodal content, specifically text-image pairs. We also aim to establish benchmarks across a range of MLLMs for diverse multimodal content comprehension tasks. These tasks not only require conventional vision-language multimodal  capabilities in the models but also demand a deep understanding of multimodal content for classification (sentiment analysis, hate speech, sarcasm, etc.) or reasoning (visual question answering).
+        To address the aforementioned gap, we conduct the comprehensive evaluation involving 30 publicly available models, including 22 MLLMs, across a diverse set of 14 datasets covering 6 distinct tasks. Our primary focus is to assess the performance of various MLLMs in the context of tasks involving the comprehension of multimodal content, specifically text-image pairs. We also aim to establish benchmarks across a range of MLLMs for diverse multimodal reasoning tasks with vision-text contexts. These tasks not only require conventional vision-language multimodal  capabilities in the models but also demand a deep understanding of multimodal content for classification (sentiment analysis, hate speech, sarcasm, etc.) or reasoning (visual question answering).
         <br><br>
-        We propose the comprehensive assessment framework called MM-BigBench, incorporating a diverse set of metrics to conduct a thorough evaluation of various models and instructions in the domain of multimodal content comprehension tasks. MM-BigBench serves as a complement to existing zero-shot evaluation studies of MLLMs, offering a more comprehensive and holistic assessment when combined with prior related work.
+        We propose the comprehensive assessment framework called MM-InstructEval, incorporating a diverse set of metrics to conduct a thorough evaluation of various models and instructions in the domain of multimodal reasoning tasks with vision-text contexts. MM-InstructEval serves as a complement to existing zero-shot evaluation studies of MLLMs, offering a more comprehensive and holistic assessment when combined with prior related work.
+        
+       
         <br><br>
         Notably, we support most models from HuggingFace Transformers 🤗
         </p>
+
+        <h2>Notes:</h2>
+        <br>
+        The notation "-" signifies that we do not assess LLMs for the PuzzleVQA and MMMU datasets. The exclusion is due to the inherent requirement of these two datasets for both image information and textual context to generate effective responses. The "Total" results of LLMs are also not calculated. The "Total^{★}" represents the aggregate results across all datasets, with the exception of PuzzleVQA and MMMU.
 
         <br><br>
 
         <h2>Diverse Tasks</h2>
 
-        <h3>Visual Question Answering with Text Context (VQAC)</h3>
+        <h3>Visual Question Answering with Vison-Text Context (VQAMC)</h3>
 
-        <a href="https://scienceqa.github.io/#dataset">ScienceQA</a>
+        <a href="https://scienceqa.github.io/#dataset">ScienceQA</a>;
+        <a href="https://huggingface.co/datasets/MMMU/MMMU">MMMU</a>;
+        <a href="https://github.com/declare-lab/LLM-PuzzleTest">AlgoPuzzleVQA</a>.
+
 
         <h3> Multimodal Sentiment Analysis (MSA)</h3>
 
@@ -279,7 +288,7 @@
         <pre>
            
         @inproceedings{Yang2023MMBigBenchEM,
-            title={MM-BigBench: Evaluating Multimodal Models on Multimodal Content Comprehension Tasks},
+            title={MM-BigBench: Evaluating Multimodal Models on Multimodal Reasoning Tasks with Vision-Text Contexts},
             author={
                Xiaocui Yang and Wenfang Wu and Shi Feng and Ming Wang and Daling Wang and Yang Li and Qi Sun and 
                Yifei Zhang and Xiaoming Fu and Soujanya Poria},
@@ -304,11 +313,11 @@
     const table = document.getElementById('leaderboard');
 
     const urls = {
-        'best_performance': "https://raw.githubusercontent.com/declare-lab/MM-BigBench/main/docs/best_performance.csv",
-        'mean_relative_gain_models': "https://raw.githubusercontent.com/declare-lab/MM-BigBench/main/docs/Mean_Relative_Gain_Models.csv",
-        'mean_relative_gain_instructions': "https://raw.githubusercontent.com/declare-lab/MM-BigBench/main/docs/Mean_Relative_Gain_Instructions.csv",
-        'adaptability': "https://raw.githubusercontent.com/declare-lab/MM-BigBench/main/docs/Adaptability.csv",
-        'best_performance_few_data': "https://raw.githubusercontent.com/declare-lab/MM-BigBench/main/docs/best_performance_few_data.csv",
+        'best_performance': "https://raw.githubusercontent.com/declare-lab/MM-InstructEval/main/docs/best_performance.csv",
+        'mean_relative_gain_models': "https://raw.githubusercontent.com/declare-lab/MM-InstructEval/main/docs/Mean_Relative_Gain_Models.csv",
+        'mean_relative_gain_instructions': "https://raw.githubusercontent.com/declare-lab/MM-InstructEval/main/docs/Mean_Relative_Gain_Instructions.csv",
+        'adaptability': "https://raw.githubusercontent.com/declare-lab/MM-InstructEval/main/docs/Adaptability.csv",
+        'best_performance_few_data': "https://raw.githubusercontent.com/declare-lab/MM-InstructEval/main/docs/best_performance_few_data.csv",
     }
 
     let currentUrl = urls['best_performance'];
