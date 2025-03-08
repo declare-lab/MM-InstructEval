@@ -4,10 +4,11 @@ Models,Instruction # 1,Instruction # 2,Instruction # 3,Instruction # 4,Instructi
 [LLaMA1-13B-hf](https://huggingface.co/srikanthmalla/decapoda-research-llama-13b-hf/tree/main),16.67,16.67,4.76,4.76,14.29,14.29,16.67,11.90,0,0 
 [LLaMA2-7B-hf](https://huggingface.co/meta-llama/Llama-2-7b-hf),21.43,21.43,11.90,7.14,14.29,7.14,7.14,0,9.52,0
 [LLaMA2-13B-hf](https://huggingface.co/meta-llama/Llama-2-13b-hf),16.67,26.19,0,2.38,19.05,14.29,19.05,2.38,0,0
+[LLaMA3.1-8B-Instruct](https://huggingface.co/meta-llama/Llama-3.1-8B-Instruct), 21.43,11.90,7.14,0,  14.29,9.52,21.43,0,2.38,11.90
 [Mixtral-AWQ](https://huggingface.co/ybelkada/Mixtral-8x7B-Instruct-v0.1-AWQ),19.05,9.52,19.05,0,21.43,0,14.29,0,9.52,7.14
 [Gemma-7B](https://huggingface.co/google/gemma-7b-it),7.14,19.05,7.14,7.14,16.67,0,19.05,7.14,7.14,9.52
 [Flan-T5-xxl](https://huggingface.co/google/flan-t5-xxl),4.76,9.52,9.52,9.52,9.52,11.90,11.90,4.76,14.29,14.29
-LLMs-Total,121.43,133.33,71.41,45.22,126.20,50.00,128.58,42.84,40.47,40.47
+LLMs-Total,142.86,145.23,78.55,45.22,140.49,59.52,150.01,42.84,42.85,52.37
 [Gemini-V](https://ai.google.dev/?gad_source=1&gclid=CjwKCAiA6KWvBhAREiwAFPZM7nRlqCw_2aeZ4cxrQgLHumHdCWiVqSk73-kR7bRJXcxWxlGGt-r1WxoCCjEQAvD_BwE),12.50, 8.33, 12.50, 10.42, 10.42, 2.08, 16.67, 22.92, 2.08, 2.08
 [OpenFlamingo](https://huggingface.co/openflamingo/OpenFlamingo-9B-deprecated),22.92, 22.92, 2.08, 0, 14.58, 2.08, 22.92, 4.17, 8.33, 0
 [Fromage](https://github.com/chiayewken/multimodal-inference/releases/download/v0.1.0/fromage_model.zip),10.42, 31.25, 2.08, 0, 8.33, 18.75, 25.00, 0, 4.17, 0
@@ -26,8 +27,19 @@ LLMs-Total,121.43,133.33,71.41,45.22,126.20,50.00,128.58,42.84,40.47,40.47
 [Lynx](https://github.com/bytedance/lynx-llm/tree/main),6.25, 16.67, 6.25, 4.17, 6.25, 12.50, 16.67, 0, 20.83, 10.42
 [Fuyu-8B](https://huggingface.co/adept/fuyu-8b),6.25, 12.50, 14.58, 6.25, 16.67, 2.08, 18.75, 6.25, 12.50, 4.17
 [LaVIT](https://huggingface.co/rain1011/LaVIT-7B-v2),10.42, 18.75, 14.58, 8.33, 12.50, 4.17, 2.08, 14.58, 8.33, 6.25
-[Qwen-VL-Chat](https://huggingface.co/Qwen/Qwen-VL-Chat),10.42, 8.33, 10.42, 8.33, 10.42, 12.50, 18.75, 6.25, 12.50, 2.08
+[LLaMA-3.2-11B-Vision](https://huggingface.co/meta-llama/Llama-3.2-11B-Vision-Instruct),16.67, 16.67, 0.0, 0.0, 16.67, 4.17, 27.08, 2.08, 2.08, 14.58
+[MiniCPM-V2.6](https://huggingface.co/openbmb/MiniCPM-V-2_6),6.25, 16.67, 8.33, 10.42, 16.67, 12.5, 10.42, 4.17, 0.0, 14.58
 [BLIP-2](https://huggingface.co/Salesforce/blip2-flan-t5-xxl),4.17, 12.50, 6.25, 12.50, 6.25, 12.50, 10.42, 4.17, 14.58, 16.67
 [InstructBLIP](https://huggingface.co/Salesforce/instructblip-flan-t5-xxl),6.25, 12.50, 10.42, 6.25, 14.58, 6.25, 6.25, 6.25, 16.67, 14.58
-MLLMs-Total,218.78, 293.75, 214.58, 164.58, 270.84, 179.15, 318.75, 118.74, 195.84, 124.99
-Total,340.21, 427.08, 285.99, 209.8, 397.04, 229.15, 447.33, 161.58, 236.31, 165.46
+[GLM4V-9B](https://huggingface.co/THUDM/glm-4v-9b),6.25, 12.5, 12.5, 8.33, 20.83, 2.08, 20.83, 2.08, 6.25, 8.33
+[InternVL2.5-8B](https://huggingface.co/OpenGVLab/InternVL2_5-8B),20.83, 8.33, 12.5, 2.08, 16.67, 6.25, 16.67, 4.17, 10.42, 2.08
+[DeepSeek-VL2-tiny](https://huggingface.co/deepseek-ai/deepseek-vl2-tiny),2.08, 4.17, 16.67, 10.42, 18.75, 16.67, 8.33, 2.08, 6.25, 14.58
+[DeepSeek-VL2-small](https://huggingface.co/deepseek-ai/deepseek-vl2-small),0.0, 18.75, 8.33, 22.92, 10.42, 8.33, 14.58, 2.08, 2.08, 12.5
+[DeepSeek-VL2](https://huggingface.co/deepseek-ai/deepseek-vl2),0.0, 12.5, 16.67, 2.08, 20.83, 10.42, 22.92, 4.17, 2.08, 8.33
+[Qwen-VL-Chat](https://huggingface.co/Qwen/Qwen-VL-Chat),10.42, 8.33, 10.42, 8.33, 10.42, 12.50, 18.75, 6.25, 12.50, 2.08
+[Qwen2-VL-7B-Instruct](https://huggingface.co/Qwen/Qwen2-VL-7B-Instruct),14.58, 12.5, 12.5, 6.25, 12.5, 10.42, 12.5, 4.17, 10.42, 4.17
+[Qwen2-VL-72B-Instruct](https://huggingface.co/Qwen/Qwen2-VL-72B-Instruct),6.25, 10.42, 14.58, 4.17, 14.58, 10.42, 10.42, 6.25, 10.42, 12.50
+[Qwen2.5-VL-3B-Instruct](https://huggingface.co/Qwen/Qwen2.5-VL-3B-Instruct),8.33, 6.25, 16.67, 0.0, 16.67, 14.58, 16.67, 4.17, 2.08, 14.58
+[Qwen2.5-VL-7B-Instruct](https://huggingface.co/Qwen/Qwen2.5-VL-7B-Instruct),2.08, 8.33, 18.75, 8.33, 20.83, 6.25, 18.75, 4.17, 8.33, 4.17
+MLLMs-Total,302.1, 420.84, 352.08, 239.58, 456.26, 281.24, 497.92, 158.33, 256.25, 235.39
+Total,444.96, 566.07, 430.63, 284.8, 596.75, 340.76, 647.93, 201.17, 299.1, 287.76
