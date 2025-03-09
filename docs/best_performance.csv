@@ -1,13 +1,13 @@
 Model,ScienceQA,PuzzleVQA,MMMU,MVSA-Single,MVSA-Multiple,TumEmo,MOSI-2,MOSI-7,MOSEI-2,MOSEI-7,Twitter-2015,Twitter-2017,MASAD,Hate,Sarcasm,MNRE,Total,Total^{★}
-[ChatGPT](https://openai.com/blog/chatgpt),69.41,-,-,56.55,53.18,48.17,89.60,44.44,84.97,40.77,65.48,59.97,72.70,60.84,69.02,38.28,-,853.38
-[LLaMA1-7B-hf](https://huggingface.co/baffo32/decapoda-research-llama-7B-hf),36.19,-,-,67.23,60.72,38.26,82.01,34.26,75.62,15.50,58.53,46.43,65.67,50.40,58.99,2.66,-,692.47
-[LLaMA1-13B-hf](https://huggingface.co/srikanthmalla/decapoda-research-llama-13b-hf/tree/main),43.33,-,-,66.99,68.82,44.68,72.10,34.11,79.55,28.74,52.07,47.24,65.49,49.20,57.53,19.22,-,729.07
-[LLaMA2-7B-hf](https://huggingface.co/meta-llama/Llama-2-7b-hf),43.08,-,-,66.99,69.22,40.28,67.68,26.38,77.30,16.78, 58.53, 46.60,67.19,52.00,56.33,3.59,-,691.95
-[LLaMA2-13B-hf](https://huggingface.co/meta-llama/Llama-2-13b-hf),55.78,-,-,66.02,68.69,45.78,81.86,31.49,81.66,24.33,60.37,48.54,69.10,55.00,60.23,20.00,-,768.85
-[LLaMA3.1-8B-Instruct](https://huggingface.co/meta-llama/Llama-3.1-8B-Instruct),60.34,-,-, 62.14, 61.94, 46.08, 87.31, 34.94, 75.12, 31.30, 50.63, 50.81, 70.15, 58.40, 56.04, 38.12, -, 783.32
-[Mixtral-AWQ](https://huggingface.co/ybelkada/Mixtral-8x7B-Instruct-v0.1-AWQ),66.63,-,-,54.37,55.59,43.94,87.92,41.23,79.30,38.27,55.45,60.21,70.56,58.00,64.38,37.03,-,812.88
-[Gemma-7B](https://huggingface.co/google/gemma-7b-it),52.95,-,-,67.72,61.61,43.10,81.65,36.11,77.05,25.06,54.29,52.43,70.94,57.80,60.07,30.31,-,771.09
-[Flan-T5-xxl](https://huggingface.co/google/flan-t5-xxl),67.43,-,-,64.81,66.01,49.56,89.60,42.86,86.52,46.29,72.13,63.70,74.39,57.40,71.40,31.41,-,883.51
+[ChatGPT](https://openai.com/blog/chatgpt),69.41,-,-,56.55,53.18,48.17,89.60,44.44,84.97,40.77,65.48,59.97,72.70,60.84,69.02,38.28,-,783.97
+[LLaMA1-7B-hf](https://huggingface.co/baffo32/decapoda-research-llama-7B-hf),36.19,-,-,67.23,60.72,38.26,82.01,34.26,75.62,15.50,58.53,46.43,65.67,50.40,58.99,2.66,-,656.28
+[LLaMA1-13B-hf](https://huggingface.co/srikanthmalla/decapoda-research-llama-13b-hf/tree/main),43.33,-,-,66.99,68.82,44.68,72.10,34.11,79.55,28.74,52.07,47.24,65.49,49.20,57.53,19.22,-,685.74 
+[LLaMA2-7B-hf](https://huggingface.co/meta-llama/Llama-2-7b-hf),43.08,-,-,66.99,69.22,40.28,67.68,26.38,77.30,16.78, 58.53, 46.60,67.19,52.00,56.33,3.59,-,648.87
+[LLaMA2-13B-hf](https://huggingface.co/meta-llama/Llama-2-13b-hf),55.78,-,-,66.02,68.69,45.78,81.86,31.49,81.66,24.33,60.37,48.54,69.10,55.00,60.23,20.00,-, 713.07
+[LLaMA3.1-8B-Instruct](https://huggingface.co/meta-llama/Llama-3.1-8B-Instruct),60.34,-,-, 62.14, 61.94, 46.08, 87.31, 34.94, 75.12, 31.30, 50.63, 50.81, 70.15, 58.40, 56.04, 38.12, -,  722.98
+[Mixtral-AWQ](https://huggingface.co/ybelkada/Mixtral-8x7B-Instruct-v0.1-AWQ),66.63,-,-,54.37,55.59,43.94,87.92,41.23,79.30,38.27,55.45,60.21,70.56,58.00,64.38,37.03,-, 746.25
+[Gemma-7B](https://huggingface.co/google/gemma-7b-it),52.95,-,-,67.72,61.61,43.10,81.65,36.11,77.05,25.06,54.29,52.43,70.94,57.80,60.07,30.31,-, 718.14
+[Flan-T5-xxl](https://huggingface.co/google/flan-t5-xxl),67.43,-,-,64.81,66.01,49.56,89.60,42.86,86.52,46.29,72.13,63.70,74.39,57.40,71.40,31.41,-, 816.08
 [Gemini-V](https://ai.google.dev/?gad_source=1&gclid=CjwKCAiA6KWvBhAREiwAFPZM7nRlqCw_2aeZ4cxrQgLHumHdCWiVqSk73-kR7bRJXcxWxlGGt-r1WxoCCjEQAvD_BwE),80.35,26.72,23.67,72.73,70.18,51.65,88.34,48.68,87.14,38.86,54.51,59.32,81.02,68.32,56.83,41.41, 973.17 , 818.99
 [OpenFlamingo](https://huggingface.co/openflamingo/OpenFlamingo-9B-deprecated),39.27,23.67,24.44,55.58,61.15,29.47,79.97,24.85,77.30,12.12,57.28,46.19,66.91,49.40,52.68,3.12,703.40 , 616.02
 [Fromage](https://github.com/chiayewken/multimodal-inference/releases/download/v0.1.0/fromage_model.zip),34.51,21.94,20.33,29.85,28.19,22.76,57.19,19.15,47.41,11.04,19.96,27.31,35.10,37.60,40.68,0.16,453.18 ,  376.40
